@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track 4 · Bonus Round — Jom Jumpa #AI</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface-2: #1c222b;
+  --ink: #e6edf3;
+  --ink-soft: #b1bac4;
+  --muted: #7d8590;
+  --purple: #b87ec9;
+  --purple-bright: #d8a8e8;
+  --purple-deep: #7e4b8c;
+  --purple-soft: rgba(184, 126, 201, 0.12);
+  --code-keyword: #ff8c42;
+  --code-string: #98d982;
+  --code-comment: #7d8590;
+  --code-fn: #b87ec9;
+  --green: #56d364;
+  --rule: #30363d;
+  --rule-soft: #21262d;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.6;
+  padding-bottom: 60px;
+}
+
+.term-bar {
+  background: #000;
+  color: var(--ink);
+  padding: 8px 22px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  border-bottom: 1px solid var(--purple-deep);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.term-dots { display: flex; gap: 6px; flex-shrink: 0; }
+.term-dot { width: 10px; height: 10px; border-radius: 50%; }
+.term-dot.r { background: #ff5f56; }
+.term-dot.y { background: #ffbd2e; }
+.term-dot.g { background: #27c93f; }
+.term-path { color: var(--purple); flex-shrink: 0; }
+.term-cmd { color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.term-cursor {
+  display: inline-block;
+  width: 7px;
+  height: 13px;
+  background: var(--purple);
+  vertical-align: middle;
+  animation: blink 1s infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+.container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+
+header {
+  padding: 40px 0 24px;
+}
+.meta-line {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 14px;
+  letter-spacing: 0.5px;
+}
+.meta-line .level {
+  background: var(--purple-soft);
+  color: var(--purple-bright);
+  padding: 3px 8px;
+  border-radius: 3px;
+  margin-right: 8px;
+}
+.meta-line .warn {
+  color: var(--code-keyword);
+  margin-left: 10px;
+}
+
+h1 {
+  font-family: 'Inter', sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.7px;
+  margin-bottom: 12px;
+}
+h1 .accent { color: var(--purple-bright); }
+.subtitle {
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  max-width: 620px;
+  line-height: 1.6;
+}
+
+.warning {
+  background: rgba(255, 140, 66, 0.08);
+  border-left: 3px solid var(--code-keyword);
+  padding: 12px 16px;
+  margin-top: 18px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  border-radius: 0 4px 4px 0;
+}
+.warning strong { color: var(--code-keyword); }
+
+.path-picker {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  margin-top: 20px;
+  overflow: hidden;
+}
+.path-picker-title {
+  padding: 14px 20px 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--purple);
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+.path-list {
+  list-style: none;
+  padding: 0 0 6px;
+}
+.path-list li {
+  border-top: 1px solid var(--rule-soft);
+}
+.path-list li:first-child { border-top: none; }
+.path-list a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: background 0.15s;
+}
+.path-list a:hover { background: var(--surface-2); }
+.path-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--purple);
+  flex-shrink: 0;
+}
+.path-name {
+  font-size: 15px;
+  font-weight: 600;
+  flex: 1;
+}
+.path-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+section { padding: 36px 0; border-top: 1px solid var(--rule-soft); }
+.section-marker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--purple);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+h2 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  margin-bottom: 6px;
+  line-height: 1.25;
+}
+h2 .accent { color: var(--purple-bright); }
+.lead {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 22px;
+  line-height: 1.55;
+  max-width: 620px;
+}
+
+.why-this {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.why-card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  padding: 14px 16px;
+}
+.why-card-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  color: var(--purple);
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.why-card p {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+.why-card p code {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--bg);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 12px;
+  color: var(--purple-bright);
+}
+
+.steps {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.step-block {
+  display: flex;
+  border-bottom: 1px solid var(--rule);
+}
+.step-block:last-child { border-bottom: none; }
+.step-block-num {
+  background: var(--surface-2);
+  width: 64px;
+  flex-shrink: 0;
+  padding: 18px 0 18px 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--purple);
+  font-weight: 600;
+  border-right: 1px solid var(--rule);
+}
+.step-block-body {
+  padding: 16px 20px;
+  flex: 1;
+  min-width: 0;
+}
+.step-block-title {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 6px;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.step-block-desc {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.step-block-desc p { margin-bottom: 8px; }
+.step-block-desc p:last-child { margin-bottom: 0; }
+.step-block-desc code {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--bg);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 12px;
+  color: var(--purple-bright);
+}
+.step-block-desc a {
+  color: var(--purple-bright);
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.step-block-desc a:hover { border-bottom-color: var(--purple-bright); }
+.step-block-desc strong { color: var(--ink); }
+
+.cmd {
+  background: #000;
+  color: var(--ink);
+  padding: 12px 14px;
+  border-radius: 4px;
+  margin: 10px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  line-height: 1.7;
+  overflow-x: auto;
+  border-left: 2px solid var(--purple);
+}
+.cmd .prompt-char { color: var(--purple); user-select: none; }
+.cmd .keyword { color: var(--code-keyword); }
+.cmd .string { color: var(--code-string); }
+.cmd .comment { color: var(--code-comment); font-style: italic; }
+.cmd .out { color: var(--muted); }
+
+.ai-prompt {
+  background: var(--surface);
+  border: 1px solid var(--purple-deep);
+  border-left: 3px solid var(--purple);
+  padding: 14px 16px;
+  border-radius: 0 5px 5px 0;
+  margin: 12px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+.ai-prompt-tag {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--purple-bright);
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.ai-prompt code {
+  color: var(--purple-bright);
+  background: rgba(184, 126, 201, 0.1);
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+.outcome {
+  background: rgba(86, 211, 100, 0.08);
+  border-left: 3px solid var(--green);
+  padding: 12px 16px;
+  border-radius: 0 4px 4px 0;
+  margin-top: 14px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+.outcome strong { color: var(--green); }
+
+.closer {
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  max-width: 640px;
+}
+.closer strong { color: var(--purple-bright); }
+.closer em { font-style: italic; color: var(--purple-bright); }
+
+footer {
+  text-align: center;
+  padding: 36px 22px 20px;
+  border-top: 1px solid var(--rule);
+  margin-top: 32px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.foot-line { font-size: 12px; color: var(--muted); margin-bottom: 14px; line-height: 1.6; }
+.foot-line .purple { color: var(--purple); }
+.foot-links {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  font-size: 11.5px;
+}
+.foot-links a { color: var(--purple-bright); text-decoration: none; }
+
+@media (max-width: 480px) {
+  h1 { font-size: 24px; }
+  .why-this { grid-template-columns: 1fr; }
+  .step-block-num { width: 50px; padding-left: 12px; }
+  .path-list a { padding: 12px 16px; gap: 10px; }
+  .path-name { font-size: 14px; }
+}
+</style>
+</head>
+<body>
+
+<div class="term-bar">
+  <div class="term-dots">
+    <span class="term-dot r"></span>
+    <span class="term-dot y"></span>
+    <span class="term-dot g"></span>
+  </div>
+  <span class="term-path">~/jjai/track-4 $</span>
+  <span class="term-cmd">cat README.md<span class="term-cursor"></span></span>
+</div>
+
+<div class="container">
+
+<header>
+  <div class="meta-line">
+    <span class="level">LEVEL 04</span>
+    <span>BONUS ROUND</span>
+    <span class="warn">⚠ NO HANDHOLDING BEYOND THIS POINT</span>
+  </div>
+  <h1>You've outgrown single-file HTML. <span class="accent">Pick a direction.</span></h1>
+  <p class="subtitle">Three concrete paths, each one a real skill. Pick whichever excites you — don't try all three tonight. Each is intentionally hands-on, not a tour of the landscape.</p>
+
+  <div class="warning">
+    <strong>HEADS UP:</strong> These require more setup than what you've done so far. Expect to spend 15–45 minutes per path. The skills compound — what you learn here unlocks the rest of your career as an AI-assisted builder.
+  </div>
+
+  <div class="path-picker">
+    <div class="path-picker-title">// CHOOSE ONE</div>
+    <ul class="path-list">
+      <li>
+        <a href="#path-supabase">
+          <span class="path-num">PATH_A</span>
+          <span class="path-name">Add a real database with Supabase</span>
+          <span class="path-time">~30 min</span>
+        </a>
+      </li>
+      <li>
+        <a href="#path-codespaces">
+          <span class="path-num">PATH_B</span>
+          <span class="path-name">Get a cloud dev environment via GitHub Codespaces</span>
+          <span class="path-time">~15 min</span>
+        </a>
+      </li>
+      <li>
+        <a href="#path-claude-code">
+          <span class="path-num">PATH_C</span>
+          <span class="path-name">Install Claude Code CLI + Superpowers</span>
+          <span class="path-time">~45 min</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<!-- PATH A: SUPABASE -->
+<section id="path-supabase">
+  <div class="section-marker">// PATH_A · 30 MIN</div>
+  <h2>Add a <span class="accent">real database</span> with Supabase</h2>
+  <p class="lead">Until now, your app forgot everything when the browser closed (or kept it only on one device via localStorage). Supabase gives you a free hosted database — your app can now remember things across devices, across users, across time.</p>
+
+  <div class="why-this">
+    <div class="why-card">
+      <div class="why-card-title">WHY THIS PATH</div>
+      <p>Single-file HTML hits a real ceiling when you need persistence beyond one browser. Supabase lifts that ceiling without changing your stack.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-card-title">PREREQ</div>
+      <p>A working app from Track 1 or 2 with some kind of data (entries, todos, scores, anything).</p>
+    </div>
+  </div>
+
+  <div class="steps">
+
+    <div class="step-block">
+      <div class="step-block-num">A.01</div>
+      <div class="step-block-body">
+        <div class="step-block-title">Create a Supabase project</div>
+        <div class="step-block-desc">
+          <p>Sign up at <a href="https://supabase.com" target="_blank">supabase.com</a> (free tier is generous — no credit card needed). Click <strong>New project</strong>. Pick a name, set a database password (save it somewhere safe), choose the Singapore region for low latency.</p>
+          <p>Wait ~2 minutes for it to provision.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-block-num">A.02</div>
+      <div class="step-block-body">
+        <div class="step-block-title">Pick a feature that needs a database</div>
+        <div class="step-block-desc">
+          <p>The right feature is one your app couldn't do with localStorage alone. Examples:</p>
+          <p>• <strong>Shared notes wall</strong> — everyone using the app sees everyone's notes<br>
+          • <strong>Cross-device sync</strong> — log your savings from phone, see it on laptop<br>
+          • <strong>Public leaderboard</strong> — quiz scores everyone can see<br>
+          • <strong>Comment thread</strong> — visitors leave feedback on your tool</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-block-num">A.03</div>
+      <div class="step-block-body">
+        <div class="step-block-title">Get your project keys</div>
+        <div class="step-block-desc">
+          <p>In Supabase dashboard → <strong>Project Settings → API</strong>. You need two things:</p>
+          <p>• <code>Project URL</code> — looks like <code>https://abcdefg.supabase.co</code><br>
+          • <code>anon public key</code> — a long JWT string starting with <code>eyJh...</code></p>
+          <p>Copy both. You're about to put them in your HTML file so the app can talk to your database.</p>
+          <div class="warning" style="margin-top: 12px;">
+            <strong>⚠ KEY SAFETY — READ THIS:</strong> You are about to paste a real key into your code. Understand what that means before you proceed.
+            <br><br>
+            <strong>What the anon key does:</strong> It gives anyone who sees your HTML file access to read and write your database. Since your HTML file is public (it's a website), the key is effectively public too.
+            <br><br>
+            <strong>Why it's okay for this exercise:</strong> The anon key only has access to what you explicitly allow in your Supabase policies. You'll set it up to allow public reads/writes for this demo — which is fine for a test app with no sensitive data.
+            <br><br>
+            <strong>What you must never do:</strong> Don't paste a <em>service role key</em> (the other key in Supabase) anywhere — that one bypasses all security rules. And never paste any key into an AI chat or share it publicly in a real app with real users or real data.
+            <br><br>
+            <strong>After tonight:</strong> Delete this Supabase project, or rotate the key from the Supabase dashboard. Treat it as a demo key — not something to leave running forever.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-block-num">A.04</div>
+      <div class="step-block-body">
+        <div class="step-block-title">Ask your AI to wire it up</div>
+        <div class="step-block-desc">
+          <p>Go back to Claude/ChatGPT with your current app. Send this prompt (filling in your actual values):</p>
+          <div class="ai-prompt">
+            <span class="ai-prompt-tag">PROMPT_TEMPLATE</span>
+            Add Supabase to my existing app. Create a table called <code>entries</code> with columns: <code>id</code> (uuid, primary key), <code>created_at</code> (timestamp), <code>content</code> (text). Replace localStorage with Supabase reads and writes. Use the Supabase JS client loaded from a CDN — keep this as a single HTML file. My Supabase URL is <code>YOUR_URL_HERE</code> and my anon key is <code>YOUR_ANON_KEY_HERE</code>. Also write me the SQL to create the table so I can run it in the Supabase SQL editor.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-block-num">A.05</div>
+      <div class="step-block-body">
+        <div class="step-block-title">Create the table in Supabase</div>
+        <div class="step-block-desc">
+          <p>Your AI will give you SQL like <code>CREATE TABLE entries (...)</code>. Go to Supabase dashboard → <strong>SQL Editor</strong> → paste the SQL → <strong>Run</strong>.</p>
+          <p>Then go to <strong>Authentication → Policies</strong> → for the <code>entries</code> table, enable a basic policy allowing reads/writes (Supabase will guide you with templates).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-block-num">A.06</div>
+      <div class="step-block-body">
+        <div class="step-block-title">Deploy and test</div>
+        <div class="step-block-desc">
+          <p>Copy the updated HTML, redeploy (same flow as Track 1/2/3). Open the URL on two devices. Add an entry from one — refresh the other. <strong>Magic.</strong></p>
+        </div>
+        <div class="outcome">
+          <strong>OUTCOME:</strong> Your app now has a real backend. Data persists forever, syncs across devices, is shareable with the world.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PATH B: CODESPACES -->
+<section id="path-codespaces">
+  <div class="section-marker">// PATH_B · 15 MIN</div>
+  <h2>Get a <span class="accent">cloud dev environment</span> with Codespaces</h2>
+  <p class="lead">Codespaces is a full VS Code editor that runs in your browser, attached to your GitHub repo. No install, no setup — but you get a real terminal, file tree, and code editor. This is where "vibe coding" stops being a toy and starts being a craft.</p>
+
+  <div class="why-this">
+    <div class="why-card">
+      <div class="why-card-title">WHY THIS PATH</div>
+      <p>Working in the GitHub web UI is fine for small edits. For anything serious, you want a real editor. Codespaces gives you one in a browser tab.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-card-title">PREREQ</div>
+      <p>The GitHub repo you set up in Track 3. Codespaces uses GitHub's free hours (120 hr/month).</p>
+    </div>
+  </div>
+
+  <div class="steps">
+
+    <div class="step-block">
+      <div class="step-block-num">B.01</div>
+      <div class="step-block-body">
+        <div class="step-block-title">Open Codespaces from your repo</div>
+        <div class="step-block-desc">
+          <p>Go to your repo on <a href="https://github.com" target="_blank">github.com</a>. Click the green <strong>Code</strong> button → <strong>Codespaces</strong> tab → <strong>Create codespace on main</strong>.</p>
+          <p>Wait ~60 seconds. A full VS Code editor loads in your browser.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-block-num">B.02</div>
+      <div class="step-block-body">
+        <div class="step-block-title">Open your index.html</div>
+        <div class="step-block-desc">
+          <p>In the left sidebar (file explorer), click <code>index.html</code>. The full code opens in the editor. You can edit here like any text editor — but with syntax highlighting, autocomplete, and Git built in.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-block-num">B.03</div>
+      <div class="step-block-body">
+        <div class="step-block-title">Preview your app live</div>
+        <div class="step-block-desc">
+          <p>Open the terminal (View menu → Terminal, or <code>Ctrl+`</code>). Run:</p>
+          <div class="cmd"><span class="prompt-char">$ </span><span class="keyword">python3</span> -m http.server <span class="string">8000</span></div>
+          <p>Codespaces will pop up an "Open in Browser" notification. Click it. Your app loads — now you can edit code, save (<code>Ctrl+S</code>), refresh — see changes instantly without redeploying.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-block-num">B.04</div>
+      <div class="step-block-body">
+        <div class="step-block-title">Install the GitHub Copilot extension</div>
+        <div class="step-block-desc">
+          <p>Left sidebar → Extensions icon → search "GitHub Copilot" → Install. (Free for students and verified open-source maintainers; otherwise paid.)</p>
+          <p>Now you have inline AI completions as you type. A whole new way to build — alongside the AI rather than handing it everything.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-block-num">B.05</div>
+      <div class="step-block-body">
+        <div class="step-block-title">Commit, push — and watch it go live</div>
+        <div class="step-block-desc">
+          <p>Made changes? Left sidebar → Source Control icon (the branchy symbol) → type a commit message → <strong>Commit</strong> → <strong>Sync</strong>.</p>
+          <p>Your code is now pushed to GitHub. <strong>If you connected Netlify to this repo in Track 3, your site auto-deploys within ~30 seconds.</strong></p>
+          <p>To watch it happen: open your Netlify dashboard → find your site → click the <strong>Deploys</strong> tab. You'll see a new deploy triggered automatically. When it shows "Published", your live URL is updated.</p>
+          <p>This is the full loop: edit in Codespaces → commit → push → Netlify rebuilds → live. No manual upload, ever again.</p>
+        </div>
+        <div class="outcome">
+          <strong>OUTCOME:</strong> You have a real developer setup — editor, terminal, AI assistant, version control — all in your browser. Every commit goes live automatically. Pick up any device, you're back at work.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PATH C: CLAUDE CODE + SUPERPOWERS -->
+<section id="path-claude-code">
+  <div class="section-marker">// PATH_C · 45 MIN</div>
+  <h2>Install <span class="accent">Claude Code CLI</span> + Superpowers</h2>
+  <p class="lead">Claude Code is a terminal-based coding agent that operates on your actual codebase — reading files, running commands, making edits. Superpowers is a plugin that adds structured methodology (brainstorming, planning, TDD, systematic debugging). Together, the most capable AI-assisted dev setup currently available.</p>
+
+  <div class="why-this">
+    <div class="why-card">
+      <div class="why-card-title">WHY THIS PATH</div>
+      <p>This is what your most-capable engineer friends are using on weekends. The ceiling is genuinely high. Steep curve, but everything before this was preparing you.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-card-title">PREREQ</div>
+      <p>A laptop (not a phone). A terminal you're willing to look at. Node.js installed.</p>
+    </div>
+  </div>
+
+  <div class="steps">
+
+    <div class="step-block">
+      <div class="step-block-num">C.01</div>
+      <div class="step-block-body">
+        <div class="step-block-title">Open a terminal</div>
+        <div class="step-block-desc">
+          <p><strong>🪟 Windows:</strong> Press <code>Win+R</code> → type <code>powershell</code> → Enter. Or search "Terminal" in Start menu.</p>
+          <p><strong>🍎 Mac:</strong> Press <code>Cmd+Space</code> → type <code>Terminal</code> → Enter.</p>
+          <p>You'll see a window with a blinking cursor. This is where you'll type commands.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-block-num">C.02</div>
+      <div class="step-block-body">
+        <div class="step-block-title">Install Node.js (if you don't have it)</div>
+        <div class="step-block-desc">
+          <p>Check first:</p>
+          <div class="cmd"><span class="prompt-char">$ </span>node --version
+<span class="out"># If you see v18.x or higher, skip to C.03.</span></div>
+          <p>If not installed, go to <a href="https://nodejs.org" target="_blank">nodejs.org</a> and install the LTS version (works on Windows + Mac). Restart your terminal after.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-block-num">C.03</div>
+      <div class="step-block-body">
+        <div class="step-block-title">Install Claude Code</div>
+        <div class="step-block-desc">
+          <p>In your terminal:</p>
+          <div class="cmd"><span class="prompt-char">$ </span>npm install -g <span class="string">@anthropic-ai/claude-code</span></div>
+          <p>Wait for it to finish (~1 minute). Verify:</p>
+          <div class="cmd"><span class="prompt-char">$ </span>claude --version</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-block-num">C.04</div>
+      <div class="step-block-body">
+        <div class="step-block-title">Navigate to your repo &amp; launch</div>
+        <div class="step-block-desc">
+          <p>Use the same repo you set up in Track 3 — this way any changes Claude Code makes will auto-deploy to your live Netlify site.</p>
+          <p>First, clone your repo to your laptop if you haven't already:</p>
+          <div class="cmd"><span class="prompt-char">$ </span>git clone https://github.com/<span class="string">YOUR_USERNAME/YOUR_REPO_NAME</span>.git
+<span class="prompt-char">$ </span><span class="keyword">cd</span> YOUR_REPO_NAME</div>
+          <p>Then launch Claude Code inside that folder:</p>
+          <div class="cmd"><span class="prompt-char">$ </span>claude</div>
+          <p>First-run will prompt you to log in via your browser. Sign in with your Anthropic account (Claude Pro/Max subscription, or API credits).</p>
+          <p><strong>The Netlify connection:</strong> When Claude Code edits your files and you commit + push (Claude Code can do this for you — just ask it to), Netlify detects the change and rebuilds your live site automatically within ~30 seconds. You can watch it happen in your Netlify dashboard under <strong>Deploys</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-block-num">C.05</div>
+      <div class="step-block-body">
+        <div class="step-block-title">Try a first task</div>
+        <div class="step-block-desc">
+          <p>Inside Claude Code's prompt, try something concrete to feel how it differs:</p>
+          <div class="ai-prompt">
+            <span class="ai-prompt-tag">PROMPT</span>
+            Read my index.html. Add a dark mode toggle in the top right corner. Use CSS variables. Remember the user's choice with localStorage.
+          </div>
+          <p>Claude reads your file, makes edits, and shows you a diff before writing. Approve the changes. <strong>This is already different from what you've been doing.</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-block-num">C.06</div>
+      <div class="step-block-body">
+        <div class="step-block-title">Install Superpowers</div>
+        <div class="step-block-desc">
+          <p>Still inside Claude Code, run:</p>
+          <div class="cmd"><span class="prompt-char">claude&gt; </span>/plugin install superpowers@claude-plugins-official</div>
+          <p>This adds 14 structured skills to Claude Code — brainstorming, planning, test-driven development, systematic debugging, code review. The skills activate automatically based on what you're doing.</p>
+          <p>Quit and restart Claude Code. You'll see a startup message confirming Superpowers is loaded.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-block-num">C.07</div>
+      <div class="step-block-body">
+        <div class="step-block-title">Try the superpower: <code>/superpowers:brainstorm</code></div>
+        <div class="step-block-desc">
+          <p>Instead of immediately asking Claude to build something, let it brainstorm with you:</p>
+          <div class="cmd"><span class="prompt-char">claude&gt; </span>/superpowers:brainstorm</div>
+          <p>Describe a vague idea — something bigger than what you've built so far. For example: <strong>"I want to track my freelance work and invoice clients."</strong></p>
+          <p>Claude won't write code. It'll ask Socratic questions, propose alternatives, narrow the spec. Once you approve the design, try <code>/superpowers:write-plan</code> → it produces a detailed implementation plan. Then <code>/superpowers:execute-plan</code> to build it, with built-in code review at every step.</p>
+        </div>
+        <div class="outcome">
+          <strong>OUTCOME:</strong> You've just experienced the shift from "AI as autocomplete" to "AI as a structured collaborator." This is what AI-assisted engineering looks like at the senior level.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CLOSER -->
+<section>
+  <div class="section-marker">// END</div>
+  <h2>One final note</h2>
+
+  <p class="closer">
+    The shift you've made tonight is not from "non-coder" to "coder." It's from <em>consumer of software</em> to <em>maker of software.</em> That's the actual gap most people never cross. <strong>You did, in one evening.</strong>
+  </p>
+  <p class="closer" style="margin-top: 14px;">
+    Track 1 gave you the proof. Track 2 gave you the iteration loop. Track 3 gave you a real deployment pipeline. Track 4 gave you a sense of how deep the rabbit hole goes. The rest is just hours of practice.
+  </p>
+  <p class="closer" style="margin-top: 14px;">
+    If you ever build something you're proud of, share it. Wall of Apps is open for life.
+  </p>
+</section>
+
+</div>
+
+<footer>
+  <div class="container">
+    <p class="foot-line">
+      <span class="purple">end of track-4-bonus-round.md</span><br>
+      keep building. the rest is a lifetime's worth.
+    </p>
+    <div class="foot-links">
+      <a href="https://mighty-parade-32e.notion.site/Jom-Jumpa-AI-Resource-Pack-358e11fbacdc80d7aee7d196dc0e0dd1" target="_blank">/resource-pack</a>
+      <a href="https://qals.substack.com" target="_blank">/q-substack</a>
+      <a href="#" onclick="scrollTo(0,0); return false;">/top</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

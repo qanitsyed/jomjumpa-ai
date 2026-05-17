@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jom Jumpa #AI — Build it. Ship it. In an hour.</title>
+<meta name="description" content="A hands-on AI-assisted coding workshop for finance professionals and curious beginners in Singapore. Take an idea, build it with AI, ship it to the internet — in under an hour.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   TOKENS — shared with the four track pages so the parent site
+   feels like the natural origin of its children.
+   ============================================================ */
+:root {
+  --paper:       #faf8f4;
+  --paper-warm:  #f2ebdc;
+  --paper-deep:  #ece2ce;
+  --ink:         #1a1c2e;
+  --ink-soft:    #3a3d54;
+  --ink-mute:    #6a6358;
+  --muted:       #7a726a;
+  --rule:        #e5dcc8;
+  --rule-soft:   #efe7d4;
+
+  --coral:       #d94e3a;
+  --coral-deep:  #b03a2a;
+  --gold:        #c89b4a;
+  --gold-deep:   #9c7530;
+
+  --t1: #2e7d5b;  /* track 1 — green */
+  --t2: #3b5ba5;  /* track 2 — blue */
+  --t3: #c66a2a;  /* track 3 — orange */
+  --t4: #7e4b8c;  /* track 4 — purple */
+
+  --dark:        #14161f;
+  --dark-2:      #1c1f2b;
+  --dark-rule:   #2a2e3c;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  font-family: 'Manrope', system-ui, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16.5px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: inherit; }
+
+/* ============================================================
+   STICKY NAV
+   ============================================================ */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 80;
+  background: rgba(250, 248, 244, 0.92);
+  backdrop-filter: saturate(140%) blur(10px);
+  -webkit-backdrop-filter: saturate(140%) blur(10px);
+  border-bottom: 1px solid var(--rule);
+}
+.nav-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 12px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+.brand {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: -0.2px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.brand em {
+  font-style: italic;
+  color: var(--coral);
+  font-weight: 500;
+}
+.brand .hash {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: var(--gold-deep);
+  font-weight: 600;
+  font-style: normal;
+}
+.nav-links {
+  display: flex;
+  gap: 22px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  text-transform: lowercase;
+}
+.nav-links a {
+  text-decoration: none;
+  color: var(--ink-soft);
+  transition: color 0.15s ease;
+}
+.nav-links a:hover { color: var(--coral); }
+.nav-cta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 8px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background 0.15s ease;
+  white-space: nowrap;
+}
+.nav-cta:hover { background: var(--coral); }
+
+@media (max-width: 760px) {
+  .nav-links { display: none; }
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 22px; }
+.wrap-narrow { max-width: 760px; margin: 0 auto; padding: 0 22px; }
+
+section { padding: 72px 0; }
+@media (max-width: 640px) { section { padding: 52px 0; } }
+
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: var(--gold);
+}
+
+h1, h2, h3 {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  line-height: 1.08;
+}
+h1 em, h2 em, h3 em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--coral);
+}
+h2 { font-size: clamp(28px, 4.2vw, 40px); margin-bottom: 14px; }
+h2 .sub-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gold-deep);
+  letter-spacing: 1.5px;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.lede {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: clamp(17px, 2vw, 19px);
+  color: var(--ink-soft);
+  line-height: 1.55;
+  max-width: 640px;
+  margin-bottom: 38px;
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  padding: 72px 0 60px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(800px 400px at 85% -10%, rgba(200, 155, 74, 0.18), transparent 60%),
+    radial-gradient(700px 500px at -10% 110%, rgba(217, 78, 58, 0.10), transparent 65%);
+  pointer-events: none;
+}
+.hero-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 38px; }
+}
+
+.hero-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+.hero-meta .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--coral);
+  box-shadow: 0 0 0 0 rgba(217, 78, 58, 0.5);
+  animation: pulse 2.2s ease-out infinite;
+}
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(217, 78, 58, 0.55); }
+  70%  { box-shadow: 0 0 0 12px rgba(217, 78, 58, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(217, 78, 58, 0); }
+}
+
+h1.hero-title {
+  font-size: clamp(44px, 6.8vw, 76px);
+  line-height: 0.98;
+  letter-spacing: -1.5px;
+  margin-bottom: 22px;
+}
+h1.hero-title .hash {
+  font-family: 'JetBrains Mono', monospace;
+  font-style: normal;
+  font-weight: 500;
+  color: var(--gold-deep);
+  font-size: 0.6em;
+  vertical-align: 0.18em;
+  margin-right: 0.05em;
+}
+h1.hero-title .ai {
+  font-style: italic;
+  color: var(--coral);
+  font-weight: 500;
+}
+
+.hero-line {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: clamp(19px, 2.3vw, 23px);
+  line-height: 1.4;
+  color: var(--ink-soft);
+  margin-bottom: 14px;
+  max-width: 520px;
+}
+.hero-line strong {
+  font-weight: 500;
+  color: var(--ink);
+  background: linear-gradient(180deg, transparent 62%, rgba(200, 155, 74, 0.35) 62%);
+  padding: 0 2px;
+}
+.hero-sub {
+  font-size: 15.5px;
+  color: var(--ink-mute);
+  margin-bottom: 32px;
+  max-width: 460px;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px;
+  border-radius: 999px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 14.5px;
+  text-decoration: none;
+  letter-spacing: 0.1px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  border: 1.5px solid transparent;
+}
+.btn-primary {
+  background: var(--coral);
+  color: var(--paper);
+  box-shadow: 0 4px 0 var(--coral-deep);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--coral-deep); }
+.btn-primary:active { transform: translateY(0); box-shadow: 0 2px 0 var(--coral-deep); }
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--ink);
+}
+.btn-ghost:hover { background: var(--ink); color: var(--paper); }
+.btn .arrow { font-family: 'JetBrains Mono', monospace; font-weight: 500; }
+
+/* terminal visual */
+.terminal {
+  background: var(--dark);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow:
+    0 30px 60px -25px rgba(20, 22, 31, 0.5),
+    0 0 0 1px var(--dark-rule);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #e6edf3;
+  transform: rotate(-0.6deg);
+}
+.term-bar {
+  background: #0a0c12;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--dark-rule);
+}
+.term-dots { display: flex; gap: 6px; }
+.term-dots span {
+  width: 11px; height: 11px; border-radius: 50%;
+  display: block;
+}
+.term-dots .r { background: #ff5f56; }
+.term-dots .y { background: #ffbd2e; }
+.term-dots .g { background: #27c93f; }
+.term-title {
+  color: #7d8590;
+  font-size: 11.5px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-right: 40px;
+}
+.term-body { padding: 18px 18px 20px; }
+.term-line { white-space: nowrap; overflow: hidden; }
+.term-prompt { color: #b87ec9; }
+.term-cmd    { color: #e6edf3; }
+.term-out    { color: #7d8590; }
+.term-ok     { color: #56d364; }
+.term-url    { color: #c89b4a; }
+.term-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background: #c89b4a;
+  vertical-align: -2px;
+  margin-left: 2px;
+  animation: blink 1.05s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ============================================================
+   GOLDEN RULE — unmissable
+   ============================================================ */
+.golden {
+  background: var(--ink);
+  color: var(--paper);
+  position: relative;
+  overflow: hidden;
+}
+.golden::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--coral), var(--gold), var(--coral));
+}
+.golden-inner {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 36px;
+  align-items: center;
+}
+@media (max-width: 760px) {
+  .golden-inner { grid-template-columns: 1fr; gap: 18px; }
+}
+.golden-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  padding: 6px 0;
+  border-right: 1px solid var(--gold);
+  padding-right: 18px;
+}
+@media (max-width: 760px) {
+  .golden-label {
+    writing-mode: horizontal-tb;
+    transform: none;
+    border-right: none;
+    border-bottom: 1px solid var(--gold);
+    padding: 0 0 12px;
+  }
+}
+.golden-quote {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(20px, 2.8vw, 28px);
+  line-height: 1.35;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--paper);
+}
+.golden-quote .accent { color: var(--gold); font-style: normal; font-weight: 500; }
+.golden-attribution {
+  margin-top: 18px;
+  font-size: 13px;
+  color: rgba(250, 248, 244, 0.6);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.3px;
+}
+
+/* ============================================================
+   TRACKS
+   ============================================================ */
+.tracks-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 38px;
+  flex-wrap: wrap;
+}
+.tracks-head .lede { margin-bottom: 0; }
+
+.tracks {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+@media (max-width: 760px) {
+  .tracks { grid-template-columns: 1fr; }
+}
+
+.track {
+  background: #fff;
+  border: 1.5px solid var(--rule);
+  border-radius: 14px;
+  padding: 28px 26px 26px;
+  text-decoration: none;
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  overflow: hidden;
+}
+.track::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--track-color);
+}
+.track:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px -18px rgba(20, 22, 31, 0.25);
+  border-color: var(--track-color);
+}
+.track-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.track-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--track-color);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.track-for {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.6px;
+  background: var(--paper-warm);
+  color: var(--ink-mute);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.track h3 {
+  font-size: 24px;
+  margin-bottom: 8px;
+  letter-spacing: -0.3px;
+}
+.track h3 em { color: var(--track-color); }
+.track-desc {
+  font-size: 15px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  margin-bottom: 18px;
+}
+.track-outcome {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--rule);
+  margin-bottom: 18px;
+}
+.track-outcome .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 1.5px;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+.track-outcome .val {
+  font-size: 14.5px;
+  color: var(--ink);
+  font-weight: 500;
+  line-height: 1.4;
+}
+.track-cta {
+  margin-top: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  color: var(--track-color);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.2s ease;
+}
+.track:hover .track-cta { gap: 12px; }
+
+.t-1 { --track-color: var(--t1); }
+.t-2 { --track-color: var(--t2); }
+.t-3 { --track-color: var(--t3); }
+.t-4 { --track-color: var(--t4); }
+
+/* ============================================================
+   BUILT TONIGHT
+   ============================================================ */
+.built {
+  background:
+    linear-gradient(180deg, var(--paper-warm) 0%, var(--paper) 100%);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.built-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+}
+.built-head h2 .live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  color: var(--coral);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  vertical-align: middle;
+  margin-left: 10px;
+}
+.built-head h2 .live::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--coral);
+  animation: pulse 2.2s ease-out infinite;
+}
+.built-submit {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  text-decoration: none;
+  color: var(--ink);
+  border-bottom: 1.5px solid var(--gold);
+  padding-bottom: 2px;
+}
+.built-submit:hover { color: var(--coral); border-color: var(--coral); }
+
+.built-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+@media (max-width: 900px) { .built-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .built-grid { grid-template-columns: 1fr; } }
+
+/* =============================================================
+   ↓↓↓ BUILT-TONIGHT CARD TEMPLATE — copy and edit during sessions
+   To add a new card, duplicate one <a class="build-card">...</a>
+   block. Fields: .build-name (label), the href (live URL),
+   .build-url (display URL). Add class "is-pick" for the 🔥 badge.
+   ============================================================= */
+.build-card {
+  background: #fff;
+  border: 1.5px solid var(--rule);
+  border-radius: 12px;
+  padding: 18px 18px 16px;
+  text-decoration: none;
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  min-height: 138px;
+}
+.build-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--coral);
+  box-shadow: 0 12px 24px -16px rgba(20, 22, 31, 0.25);
+}
+.build-card.placeholder {
+  border-style: dashed;
+  background: transparent;
+  color: var(--ink-mute);
+}
+.build-card.placeholder:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: var(--rule);
+}
+.build-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+.build-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  font-weight: 600;
+}
+.build-pick {
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--coral);
+  color: var(--paper);
+  padding: 3px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.4px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.build-name {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 19px;
+  line-height: 1.25;
+  letter-spacing: -0.2px;
+}
+.build-url {
+  margin-top: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--ink-mute);
+  word-break: break-all;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.build-url::before { content: "↗"; color: var(--coral); }
+
+/* ============================================================
+   COMMUNITIES — editorial list
+   ============================================================ */
+.comm-list {
+  border-top: 1px solid var(--rule);
+}
+.comm {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr auto;
+  gap: 24px;
+  align-items: center;
+  padding: 22px 4px;
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+  color: var(--ink);
+  transition: background 0.15s ease, padding-left 0.15s ease;
+}
+.comm:hover {
+  background: var(--rule-soft);
+  padding-left: 14px;
+  padding-right: 14px;
+}
+.comm-name {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+}
+.comm-desc {
+  font-size: 15px;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+.comm-url {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  color: var(--ink-mute);
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+.comm:hover .comm-url { color: var(--coral); }
+@media (max-width: 760px) {
+  .comm {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 20px 4px;
+  }
+  .comm-name { font-size: 19px; }
+}
+
+/* ============================================================
+   TOOLS TABLE
+   ============================================================ */
+.tools {
+  background:
+    radial-gradient(700px 300px at 100% 0%, rgba(200, 155, 74, 0.12), transparent 60%),
+    var(--paper);
+}
+.tools-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15.5px;
+}
+.tools-table thead th {
+  text-align: left;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 600;
+  padding: 0 0 14px;
+  border-bottom: 2px solid var(--ink);
+}
+.tools-table tbody tr {
+  border-bottom: 1px solid var(--rule);
+  transition: background 0.15s ease;
+}
+.tools-table tbody tr:hover { background: var(--rule-soft); }
+.tools-table td {
+  padding: 18px 12px 18px 0;
+  vertical-align: top;
+}
+.tools-table td:first-child {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 18px;
+  width: 24%;
+  letter-spacing: -0.2px;
+}
+.tools-table td:nth-child(2) {
+  color: var(--ink-soft);
+  font-size: 15px;
+  width: 46%;
+}
+.tools-table td:last-child {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  text-align: right;
+  width: 30%;
+}
+.tools-table td:last-child a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: 1px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.tools-table td:last-child a:hover {
+  color: var(--coral);
+  border-color: var(--coral);
+}
+@media (max-width: 640px) {
+  .tools-table thead { display: none; }
+  .tools-table tbody tr {
+    display: block;
+    padding: 16px 0;
+  }
+  .tools-table td {
+    display: block;
+    padding: 2px 0;
+    width: auto !important;
+    text-align: left !important;
+  }
+  .tools-table td:first-child { font-size: 19px; margin-bottom: 4px; }
+}
+
+/* ============================================================
+   LEARN — resource cards
+   ============================================================ */
+.learn-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+@media (max-width: 720px) { .learn-grid { grid-template-columns: 1fr; } }
+
+.learn-card {
+  background: #fff;
+  border: 1.5px solid var(--rule);
+  border-radius: 12px;
+  padding: 24px 22px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.learn-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold);
+  box-shadow: 0 10px 22px -16px rgba(20, 22, 31, 0.25);
+}
+.learn-name {
+  font-family: 'Fraunces', serif;
+  font-size: 21px;
+  font-weight: 500;
+  letter-spacing: -0.2px;
+}
+.learn-desc {
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+.learn-url {
+  margin-top: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--coral);
+  letter-spacing: 0.2px;
+}
+
+/* ============================================================
+   STAY CONNECTED
+   ============================================================ */
+.connect {
+  background: var(--dark);
+  color: var(--paper);
+  position: relative;
+  overflow: hidden;
+}
+.connect::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(700px 350px at 90% 110%, rgba(200, 155, 74, 0.18), transparent 60%),
+    radial-gradient(600px 400px at -5% -10%, rgba(217, 78, 58, 0.12), transparent 65%);
+  pointer-events: none;
+}
+.connect-inner { position: relative; }
+.connect h2 { color: var(--paper); }
+.connect h2 em { color: var(--gold); }
+.connect .lede { color: rgba(250, 248, 244, 0.72); }
+
+.connect-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+@media (max-width: 760px) { .connect-grid { grid-template-columns: 1fr; } }
+
+.connect-card {
+  background: var(--dark-2);
+  border: 1px solid var(--dark-rule);
+  border-radius: 12px;
+  padding: 24px 22px;
+  text-decoration: none;
+  color: var(--paper);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+.connect-card:hover { transform: translateY(-2px); border-color: var(--gold); }
+.connect-card.primary {
+  background: linear-gradient(135deg, #1f5c43 0%, #14161f 130%);
+  border-color: #2e7d5b;
+}
+.connect-card.primary:hover { border-color: #56d364; }
+.connect-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+}
+.connect-card.primary .connect-tag { color: #98d982; }
+.connect-name {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+}
+.connect-desc {
+  font-size: 14px;
+  color: rgba(250, 248, 244, 0.7);
+  line-height: 1.45;
+}
+.connect-url {
+  margin-top: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: rgba(250, 248, 244, 0.55);
+  letter-spacing: 0.2px;
+}
+.connect-note {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: rgba(250, 248, 244, 0.5);
+  letter-spacing: 0.4px;
+  border-top: 1px solid var(--dark-rule);
+  padding-top: 20px;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  background: #0a0c12;
+  color: rgba(250, 248, 244, 0.7);
+  padding: 44px 0 32px;
+  font-size: 13.5px;
+}
+.foot-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.foot-brand {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  color: var(--paper);
+  margin-bottom: 6px;
+}
+.foot-brand em { color: var(--coral); font-style: italic; font-weight: 500; }
+.foot-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: rgba(250, 248, 244, 0.55);
+  letter-spacing: 0.3px;
+}
+.foot-side {
+  text-align: right;
+  max-width: 340px;
+  font-style: italic;
+  font-family: 'Fraunces', serif;
+  color: rgba(250, 248, 244, 0.6);
+  line-height: 1.45;
+}
+@media (max-width: 640px) {
+  .foot-side { text-align: left; }
+}
+
+/* ============================================================
+   REVEAL ON SCROLL
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .term-cursor, .hero-meta .dot, .built-head h2 .live::before { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- =====================================================
+     NAV
+     ===================================================== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand">Jom Jumpa <span class="hash">#</span><em>AI</em></a>
+    <div class="nav-links">
+      <a href="#rule">rule</a>
+      <a href="#tracks">tracks</a>
+      <a href="#built">built tonight</a>
+      <a href="#community">community</a>
+      <a href="#tools">tools</a>
+    </div>
+    <a href="#connect" class="nav-cta">join_</a>
+  </div>
+</nav>
+
+<!-- =====================================================
+     HERO
+     ===================================================== -->
+<header class="hero" id="top">
+  <div class="wrap hero-inner">
+    <div class="reveal">
+      <div class="hero-meta">
+        <span class="dot"></span>
+        <span>Workshop · Singapore · 2026</span>
+      </div>
+      <h1 class="hero-title">
+        Jom Jumpa<br>
+        <span class="hash">#</span><span class="ai">AI</span>
+      </h1>
+      <p class="hero-line">
+        Take an idea. Build it with AI. <strong>Ship it to the internet.</strong> In under an hour.
+      </p>
+      <p class="hero-sub">
+        A hands-on workshop for people who've never written code &mdash; and the curious who want to go further.
+      </p>
+      <div class="hero-ctas">
+        <a href="#tracks" class="btn btn-primary">Pick a track <span class="arrow">→</span></a>
+        <a href="#rule" class="btn btn-ghost">The Golden Rule</a>
+      </div>
+    </div>
+
+    <div class="reveal" aria-hidden="true">
+      <div class="terminal">
+        <div class="term-bar">
+          <div class="term-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+          <div class="term-title">~/jom-jumpa &mdash; zsh</div>
+        </div>
+        <div class="term-body">
+          <div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">claude</span> <span class="term-out">"build me an app"</span></div>
+          <div class="term-line"><span class="term-out">→ writing index.html&hellip;</span></div>
+          <div class="term-line"><span class="term-out">→ deploying to netlify&hellip;</span></div>
+          <div class="term-line"><span class="term-ok">✓ live in 47s</span></div>
+          <div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">open</span> <span class="term-url">https://your-app.netlify.app</span></div>
+          <div class="term-line"><span class="term-prompt">$</span> <span class="term-cursor"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- =====================================================
+     GOLDEN RULE
+     ===================================================== -->
+<section class="golden" id="rule">
+  <div class="wrap golden-inner reveal">
+    <div class="golden-label">The Golden Rule</div>
+    <div>
+      <blockquote class="golden-quote">
+        Always end your prompt with: <span class="accent">"Build this as a single self-contained HTML file with no external libraries. Clean, modern design. Mobile-friendly."</span>
+      </blockquote>
+      <p class="golden-attribution">// The single most important instruction in this workshop.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     TRACKS
+     ===================================================== -->
+<section id="tracks">
+  <div class="wrap">
+    <div class="tracks-head reveal">
+      <div>
+        <div class="eyebrow">04 tracks</div>
+        <h2><span class="sub-num">§ 01</span>Pick where you <em>jump in</em>.</h2>
+      </div>
+      <p class="lede">
+        Each track stands on its own. Start at Track 1 to get something live tonight, or skip ahead if you've shipped before.
+      </p>
+    </div>
+
+    <div class="tracks">
+      <a href="track-1-get-it-live.html" class="track t-1 reveal">
+        <div class="track-meta">
+          <span class="track-num">Track 01 · Get It Live</span>
+          <span class="track-for">Total beginner</span>
+        </div>
+        <h3>Idea to URL in <em>one prompt</em>.</h3>
+        <p class="track-desc">Open Lovable. Type the magic prompt. Watch your app appear. Get the link. Send it to someone.</p>
+        <div class="track-outcome">
+          <span class="label">You'll have</span>
+          <span class="val">A live web app at a URL anyone can visit.</span>
+        </div>
+        <span class="track-cta">Open Track 1 →</span>
+      </a>
+
+      <a href="track-2-make-it-yours.html" class="track t-2 reveal">
+        <div class="track-meta">
+          <span class="track-num">Track 02 · Make It Yours</span>
+          <span class="track-for">Got an idea</span>
+        </div>
+        <h3>Iterate until it feels <em>like yours</em>.</h3>
+        <p class="track-desc">Edit by talking. Change copy, colours, layout. Learn the prompting rhythm that makes the AI listen.</p>
+        <div class="track-outcome">
+          <span class="label">You'll have</span>
+          <span class="val">An app that reflects your taste, not the AI's defaults.</span>
+        </div>
+        <span class="track-cta">Open Track 2 →</span>
+      </a>
+
+      <a href="track-3-dev-mode.html" class="track t-3 reveal">
+        <div class="track-meta">
+          <span class="track-num">Track 03 · Dev Mode</span>
+          <span class="track-for">Curious tinkerer</span>
+        </div>
+        <h3>Connect a <em>real repo</em> to a real domain.</h3>
+        <p class="track-desc">GitHub. Netlify. Continuous deploy. The same workflow this very site runs on &mdash; demystified in 20 minutes.</p>
+        <div class="track-outcome">
+          <span class="label">You'll have</span>
+          <span class="val">A repo on GitHub that auto-deploys on every push.</span>
+        </div>
+        <span class="track-cta">Open Track 3 →</span>
+      </a>
+
+      <a href="track-4-bonus-round.html" class="track t-4 reveal">
+        <div class="track-meta">
+          <span class="track-num">Track 04 · Bonus Round</span>
+          <span class="track-for">Going further</span>
+        </div>
+        <h3>Add a database. Add <em>real magic</em>.</h3>
+        <p class="track-desc">Supabase, the Claude API, agent flows. The level where your app stops being a toy and starts being a tool.</p>
+        <div class="track-outcome">
+          <span class="label">You'll have</span>
+          <span class="val">An app with persistence, auth, or AI of its own.</span>
+        </div>
+        <span class="track-cta">Open Track 4 →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     BUILT TONIGHT
+     ===================================================== -->
+<section class="built" id="built">
+  <div class="wrap">
+    <div class="built-head reveal">
+      <div>
+        <div class="eyebrow">live · updated during the session</div>
+        <h2><span class="sub-num">§ 02</span>What the room <em>built tonight</em><span class="live">live</span></h2>
+      </div>
+      <a href="https://tally.so/r/Ek82MN" target="_blank" rel="noopener" class="built-submit">submit your build →</a>
+    </div>
+
+    <!-- =====================================================
+         BUILT-TONIGHT CARDS
+         To add a card during the session, copy one of the
+         .build-card blocks below, paste it above the closing
+         </div> of .built-grid, and change:
+           - href="..."             the live URL of the app
+           - .build-name            the app name
+           - .build-url             the visible URL
+           - .build-tag (optional)  category label
+         Add class="is-pick" + the <span class="build-pick">
+         tag to mark a community pick.
+         ===================================================== -->
+
+    <div class="built-grid">
+
+      <!-- ====== PLACEHOLDER CARD 1 — replace once submitted ====== -->
+      <a href="#" class="build-card placeholder">
+        <div class="build-head">
+          <span class="build-tag">waiting for you</span>
+        </div>
+        <div class="build-name">Your app goes here.</div>
+        <div class="build-url">submit via the link above</div>
+      </a>
+
+      <!-- ====== PLACEHOLDER CARD 2 — replace once submitted ====== -->
+      <a href="#" class="build-card placeholder">
+        <div class="build-head">
+          <span class="build-tag">waiting</span>
+        </div>
+        <div class="build-name">Then your friend's app.</div>
+        <div class="build-url">we'll push it live on stage</div>
+      </a>
+
+      <!-- ====== PLACEHOLDER CARD 3 — replace once submitted ====== -->
+      <a href="#" class="build-card placeholder">
+        <div class="build-head">
+          <span class="build-tag">waiting</span>
+        </div>
+        <div class="build-name">Then the one nobody expected.</div>
+        <div class="build-url">that's the best part</div>
+      </a>
+
+      <!--
+        ====== TEMPLATE — copy this block for a real submission ======
+        <a href="https://example-app.netlify.app" target="_blank" rel="noopener" class="build-card">
+          <div class="build-head">
+            <span class="build-tag">tool</span>
+            <span class="build-pick">🔥 Pick</span>
+          </div>
+          <div class="build-name">App name in a short label.</div>
+          <div class="build-url">example-app.netlify.app</div>
+        </a>
+      -->
+
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     COMMUNITIES
+     ===================================================== -->
+<section id="community">
+  <div class="wrap-narrow">
+    <div class="reveal">
+      <div class="eyebrow">singapore · ai communities</div>
+      <h2><span class="sub-num">§ 03</span>Where the <em>builders</em> hang out.</h2>
+      <p class="lede">
+        Tonight is one room. These are the rooms every other night. Join one, show up once, and you'll never look for "people to build with" again.
+      </p>
+    </div>
+
+    <div class="comm-list reveal">
+      <a href="https://singapore.aitinkerers.org" target="_blank" rel="noopener" class="comm">
+        <div class="comm-name">AI Tinkerers Singapore</div>
+        <div class="comm-desc">Monthly builder meetup, live demos, vetted attendees.</div>
+        <div class="comm-url">singapore.aitinkerers.org</div>
+      </a>
+      <a href="https://meetup.com/global-ai-singapore-community" target="_blank" rel="noopener" class="comm">
+        <div class="comm-name">Global AI Singapore <em style="font-style:italic; color:var(--ink-mute); font-weight:400;">(Agentic Nights)</em></div>
+        <div class="comm-desc">Monthly meetup. Beginner-friendly, deep technical talks.</div>
+        <div class="comm-url">meetup.com/global-ai-singapore-community</div>
+      </a>
+      <a href="https://aievents.sg" target="_blank" rel="noopener" class="comm">
+        <div class="comm-name">AI Events SG</div>
+        <div class="comm-desc">The master calendar for every AI event in Singapore.</div>
+        <div class="comm-url">aievents.sg</div>
+      </a>
+      <a href="https://ai.engineer/singapore" target="_blank" rel="noopener" class="comm">
+        <div class="comm-name">AI Engineer Singapore</div>
+        <div class="comm-desc">The annual builder conference for working engineers.</div>
+        <div class="comm-url">ai.engineer/singapore</div>
+      </a>
+      <a href="https://superai.com" target="_blank" rel="noopener" class="comm">
+        <div class="comm-name">SuperAI</div>
+        <div class="comm-desc">Asia's largest AI conference. Marina Bay Sands.</div>
+        <div class="comm-url">superai.com</div>
+      </a>
+      <a href="https://aisingapore.org" target="_blank" rel="noopener" class="comm">
+        <div class="comm-name">AI Singapore</div>
+        <div class="comm-desc">The national AI programme. Apprenticeship schemes, grants, talent.</div>
+        <div class="comm-url">aisingapore.org</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     TOOLS
+     ===================================================== -->
+<section class="tools" id="tools">
+  <div class="wrap-narrow">
+    <div class="reveal">
+      <div class="eyebrow">level up · your toolbelt</div>
+      <h2><span class="sub-num">§ 04</span>The tools <em>worth knowing</em>.</h2>
+      <p class="lede">
+        Lovable will get you live tonight. These are what to try next, depending on where you want to go.
+      </p>
+    </div>
+
+    <table class="tools-table reveal">
+      <thead>
+        <tr>
+          <th>Tool</th>
+          <th>Best for</th>
+          <th style="text-align:right;">Where</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Lovable</td>
+          <td>The most beginner-friendly full-app builder.</td>
+          <td><a href="https://lovable.dev" target="_blank" rel="noopener">lovable.dev</a></td>
+        </tr>
+        <tr>
+          <td>Bolt</td>
+          <td>The best free tier for prompt-to-app.</td>
+          <td><a href="https://bolt.new" target="_blank" rel="noopener">bolt.new</a></td>
+        </tr>
+        <tr>
+          <td>v0 by Vercel</td>
+          <td>Beautiful UI components, one prompt at a time.</td>
+          <td><a href="https://v0.app" target="_blank" rel="noopener">v0.app</a></td>
+        </tr>
+        <tr>
+          <td>Replit</td>
+          <td>A full coding environment in your browser.</td>
+          <td><a href="https://replit.com" target="_blank" rel="noopener">replit.com</a></td>
+        </tr>
+        <tr>
+          <td>Claude Code</td>
+          <td>A terminal AI coding agent. The tool we use on stage.</td>
+          <td><a href="https://claude.com/claude-code" target="_blank" rel="noopener">claude.com/claude-code</a></td>
+        </tr>
+        <tr>
+          <td>Supabase</td>
+          <td>A free database for your app.</td>
+          <td><a href="https://supabase.com" target="_blank" rel="noopener">supabase.com</a></td>
+        </tr>
+        <tr>
+          <td>Netlify</td>
+          <td>Free hosting + auto-deploy from GitHub.</td>
+          <td><a href="https://netlify.com" target="_blank" rel="noopener">netlify.com</a></td>
+        </tr>
+        <tr>
+          <td>GitHub Pages</td>
+          <td>Free permanent hosting, straight from your repo.</td>
+          <td><a href="https://pages.github.com" target="_blank" rel="noopener">pages.github.com</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- =====================================================
+     LEARN
+     ===================================================== -->
+<section id="learn">
+  <div class="wrap-narrow">
+    <div class="reveal">
+      <div class="eyebrow">free · learning resources</div>
+      <h2><span class="sub-num">§ 05</span>If you only read <em>four things</em>.</h2>
+      <p class="lede">
+        Everything below is free. The first hour you spend with any of these will quietly change how you talk to every model from now on.
+      </p>
+    </div>
+
+    <div class="learn-grid reveal">
+      <a href="https://docs.claude.com" target="_blank" rel="noopener" class="learn-card">
+        <div class="learn-name">Anthropic Prompting Guide</div>
+        <div class="learn-desc">Straight from the people who make Claude. Crisp, technical, opinionated.</div>
+        <div class="learn-url">docs.claude.com →</div>
+      </a>
+      <a href="https://learnprompting.org" target="_blank" rel="noopener" class="learn-card">
+        <div class="learn-name">Learn Prompting</div>
+        <div class="learn-desc">The most comprehensive free prompting guide on the internet.</div>
+        <div class="learn-url">learnprompting.org →</div>
+      </a>
+      <a href="https://promptingguide.ai" target="_blank" rel="noopener" class="learn-card">
+        <div class="learn-name">Prompt Engineering Guide</div>
+        <div class="learn-desc">The DAIR.AI handbook. Patterns, techniques, papers in one place.</div>
+        <div class="learn-url">promptingguide.ai →</div>
+      </a>
+      <a href="https://deeplearning.ai" target="_blank" rel="noopener" class="learn-card">
+        <div class="learn-name">DeepLearning.AI — 1hr Course</div>
+        <div class="learn-desc">Andrew Ng + OpenAI. The single best hour you can spend on this.</div>
+        <div class="learn-url">deeplearning.ai →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     STAY CONNECTED
+     ===================================================== -->
+<section class="connect" id="connect">
+  <div class="wrap connect-inner">
+    <div class="reveal">
+      <div class="eyebrow" style="color: var(--gold);">stay in the loop</div>
+      <h2>Tonight is one session. The <em>series</em> continues.</h2>
+      <p class="lede">Join the WhatsApp community for the next dates, follow along, or just lurk &mdash; all welcome.</p>
+    </div>
+
+    <div class="connect-grid reveal">
+      <a href="https://chat.whatsapp.com/JKdwQrOXKMj3NOrwdvEkBL" target="_blank" rel="noopener" class="connect-card primary">
+        <span class="connect-tag">whatsapp · primary</span>
+        <span class="connect-name">Join the community chat</span>
+        <span class="connect-desc">Where the next session, the build links, and the questions live.</span>
+        <span class="connect-url">chat.whatsapp.com →</span>
+      </a>
+      <a href="https://linkedin.com/in/qanital" target="_blank" rel="noopener" class="connect-card">
+        <span class="connect-tag">linkedin</span>
+        <span class="connect-name">Connect with the host</span>
+        <span class="connect-url">linkedin.com/in/qanital →</span>
+      </a>
+      <a href="https://qals.substack.com" target="_blank" rel="noopener" class="connect-card">
+        <span class="connect-tag">substack</span>
+        <span class="connect-name">The longer-form essays</span>
+        <span class="connect-url">qals.substack.com →</span>
+      </a>
+    </div>
+
+    <p class="connect-note">// Future sessions in the Jom Jumpa #AI series will be announced here first.</p>
+  </div>
+</section>
+
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
+<footer>
+  <div class="wrap foot-inner">
+    <div>
+      <div class="foot-brand">Jom Jumpa <em>#AI</em></div>
+      <div class="foot-meta">2026 · Hosted at UOB · Organised with Mendaki</div>
+    </div>
+    <div class="foot-side">
+      This site was built and deployed using exactly the tools we taught tonight.
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Reveal-on-scroll — vanilla IntersectionObserver, no libraries.
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-in');
+        io.unobserve(e.target);
+      }
+    }
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>

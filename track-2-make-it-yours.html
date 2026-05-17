@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track 2 · Make It Yours — Jom Jumpa #AI</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --paper: #f7f4ed;
+  --paper-cool: #ebe6da;
+  --ink: #14182a;
+  --ink-soft: #2e334a;
+  --muted: #6e7186;
+  --blue: #3b5ba5;
+  --blue-deep: #2a447f;
+  --blue-soft: #e8edf7;
+  --code-bg: #2a3656;
+  --code-text: #cad3e8;
+  --accent: #c89b4a;
+  --rule: #d8d2c0;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.6;
+  padding-bottom: 60px;
+}
+
+.golden-rule {
+  background: var(--ink);
+  color: white;
+  padding: 12px 22px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 2px solid var(--accent);
+}
+.gr-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  margin-bottom: 3px;
+}
+.gr-text {
+  font-size: 13px;
+  line-height: 1.45;
+}
+.gr-text code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  background: rgba(255,255,255,0.08);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+.container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+header {
+  padding: 36px 0 28px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 8px;
+}
+.breadcrumb {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--blue);
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+.breadcrumb .step {
+  background: var(--blue-soft);
+  padding: 4px 8px;
+  border-radius: 3px;
+  margin-right: 4px;
+}
+h1 {
+  font-family: 'Fraunces', serif;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+}
+h1 em { font-style: italic; color: var(--blue); }
+.subtitle {
+  font-size: 15.5px;
+  color: var(--ink-soft);
+  max-width: 540px;
+  line-height: 1.55;
+}
+
+section { padding: 32px 0; }
+.section-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--blue);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-tag::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+h2 em { font-style: italic; color: var(--blue); }
+
+.intro { font-size: 15px; color: var(--ink-soft); margin-bottom: 18px; line-height: 1.55; }
+
+/* SUMMARY */
+.summary {
+  background: white;
+  border-radius: 8px;
+  padding: 6px 0;
+  border: 1.5px solid var(--blue);
+  border-left: 4px solid var(--blue);
+}
+.summary-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 13px 22px;
+}
+.summary-step:not(:last-child) { border-bottom: 1px solid var(--rule); }
+.step-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--blue);
+  font-weight: 600;
+  background: var(--blue-soft);
+  padding: 2px 8px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.step-text { font-size: 15px; line-height: 1.5; flex: 1; }
+.step-text strong { color: var(--blue-deep); }
+
+/* PROMPT TEMPLATES */
+.prompts {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.prompt-card {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid var(--rule);
+  overflow: hidden;
+}
+.prompt-head {
+  background: var(--paper-cool);
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.prompt-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 1px;
+  color: var(--blue);
+  background: var(--blue-soft);
+  padding: 3px 7px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+.prompt-title {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  font-weight: 600;
+  flex: 1;
+}
+.prompt-body {
+  padding: 14px 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  background: var(--code-bg);
+  color: var(--code-text);
+}
+.prompt-body .accent { color: #f0c674; }
+
+/* TROUBLESHOOT */
+.problems { display: flex; flex-direction: column; gap: 8px; }
+details.problem {
+  background: white;
+  border-radius: 6px;
+  border: 1px solid var(--rule);
+}
+details.problem[open] { border-color: var(--blue); }
+details.problem summary {
+  padding: 14px 18px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  list-style: none;
+  -webkit-tap-highlight-color: transparent;
+}
+details.problem summary::-webkit-details-marker { display: none; }
+.problem-prefix {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  color: var(--blue);
+  background: var(--blue-soft);
+  padding: 3px 7px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.problem-text { flex: 1; color: var(--ink); }
+.problem-arrow {
+  color: var(--muted);
+  font-size: 11px;
+  transition: transform 0.2s;
+}
+details.problem[open] .problem-arrow { transform: rotate(90deg); }
+.solution {
+  padding: 0 18px 18px 18px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  border-top: 1px solid var(--rule);
+  padding-top: 14px;
+}
+.solution p { margin-bottom: 10px; }
+.solution p:last-child { margin-bottom: 0; }
+.solution code {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--paper-cool);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 12.5px;
+}
+.solution .inline-prompt {
+  background: var(--code-bg);
+  color: var(--code-text);
+  padding: 12px 14px;
+  border-radius: 5px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  line-height: 1.55;
+  margin-top: 6px;
+}
+
+/* WALKTHROUGH */
+.walkthrough { display: flex; flex-direction: column; gap: 14px; }
+.walk-step {
+  background: white;
+  border-radius: 6px;
+  padding: 18px 20px;
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--blue);
+}
+.walk-step-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.walk-step-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--blue);
+  font-weight: 600;
+}
+.walk-step-title {
+  font-family: 'Fraunces', serif;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.walk-step-body {
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+.walk-step-body code {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--paper-cool);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 12.5px;
+}
+
+footer {
+  text-align: center;
+  padding: 36px 22px 20px;
+  border-top: 1px solid var(--rule);
+  margin-top: 32px;
+}
+.foot-line { font-size: 13.5px; color: var(--muted); margin-bottom: 14px; }
+.foot-links {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  font-size: 12.5px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.foot-links a {
+  color: var(--blue);
+  text-decoration: none;
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 30px; }
+  h2 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<div class="golden-rule">
+  <div class="gr-label">⭐ GOLDEN RULE</div>
+  <div class="gr-text">Always end prompts with: <code>"Build this as a single self-contained HTML file with no external libraries. Clean, modern design. Mobile-friendly."</code></div>
+</div>
+
+<div class="container">
+
+<header>
+  <div class="breadcrumb"><span class="step">T1 ✓</span> Make it yours · T2</div>
+  <h1>Now <em>make it yours.</em></h1>
+  <p class="subtitle">Add features. Polish the design. Save user data. Redeploy in 30 seconds. The iteration loop is where the real learning happens.</p>
+</header>
+
+<section>
+  <div class="section-tag">// THE LOOP</div>
+  <h2>The <em>iterate-redeploy</em> rhythm</h2>
+  <p class="intro">You're now in a tight feedback loop. Talk to your AI, download the result, push it live. Repeat.</p>
+  <div class="summary">
+    <div class="summary-step">
+      <div class="step-num">01</div>
+      <div class="step-text">Open your existing AI chat. Tell it what to add or change — <strong>one feature at a time.</strong></div>
+    </div>
+    <div class="summary-step">
+      <div class="step-num">02</div>
+      <div class="step-text">Check the preview. If it broke something, say <strong>"undo the last change"</strong> or describe what went wrong.</div>
+    </div>
+    <div class="summary-step">
+      <div class="step-num">03</div>
+      <div class="step-text">Once happy, <strong>download the new code file</strong> from your AI (same as Track 1).</div>
+    </div>
+    <div class="summary-step">
+      <div class="step-num">04</div>
+      <div class="step-text">Redeploy: re-upload to Netlify, or re-paste into <code>pages.edgeone.ai/drop</code>.</div>
+    </div>
+    <div class="summary-step">
+      <div class="step-num">05</div>
+      <div class="step-text"><strong>Pro tip:</strong> in Netlify, claim a custom site name once so your URL stays the same across deploys.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-tag">// PROMPT LIBRARY</div>
+  <h2>Feature prompts that <em>just work.</em></h2>
+  <p class="intro">Copy any of these, paste into your AI chat, watch the magic. Each is designed to add one specific capability without breaking the rest.</p>
+
+  <div class="prompts">
+
+    <div class="prompt-card">
+      <div class="prompt-head">
+        <span class="prompt-tag">UX</span>
+        <span class="prompt-title">Add dark mode</span>
+      </div>
+      <div class="prompt-body">Add a dark mode toggle in the top-right corner. Use CSS variables so colours switch cleanly. Remember the user's choice with localStorage. Keep the rest of the app unchanged.</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-head">
+        <span class="prompt-tag">DATA</span>
+        <span class="prompt-title">Save data between visits</span>
+      </div>
+      <div class="prompt-body">Use localStorage to save all user entries so they persist when I close the browser and come back. Load them automatically on page open.</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-head">
+        <span class="prompt-tag">VISUAL</span>
+        <span class="prompt-title">Add a chart</span>
+      </div>
+      <div class="prompt-body">Add a simple bar or line chart showing the data over time. Use inline SVG or Canvas — <span class="accent">no external chart libraries.</span> Keep it clean and minimal.</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-head">
+        <span class="prompt-tag">POLISH</span>
+        <span class="prompt-title">Make it look more polished</span>
+      </div>
+      <div class="prompt-body">Improve the visual design. Use a clean modern aesthetic with proper spacing, a refined colour palette (max 3 colours), and good typography. Mobile-friendly. <span class="accent">Same single HTML file.</span></div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-head">
+        <span class="prompt-tag">FUNCTION</span>
+        <span class="prompt-title">Add export / share</span>
+      </div>
+      <div class="prompt-body">Add a button to download my results as a PNG image, or copy a shareable summary to my clipboard. Use built-in browser APIs only.</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-head">
+        <span class="prompt-tag">I18N</span>
+        <span class="prompt-title">Add a language toggle</span>
+      </div>
+      <div class="prompt-body">Add a toggle in the top-right that switches the interface between English and Bahasa Melayu. Translate all labels and buttons cleanly.</div>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <div class="section-tag">// COMMON GOTCHAS</div>
+  <h2>When things <em>go sideways.</em></h2>
+
+  <div class="problems">
+
+    <details class="problem">
+      <summary>
+        <span class="problem-prefix">001</span>
+        <span class="problem-text">AI broke my working app</span>
+        <span class="problem-arrow">▸</span>
+      </summary>
+      <div class="solution">
+        <p>Don't panic. Say to your AI: <code>Revert the last change — go back to the previous working version.</code></p>
+        <p>If that doesn't work, scroll up in your chat to the last good code block and copy that one instead. Your old code is still there in the chat history.</p>
+      </div>
+    </details>
+
+    <details class="problem">
+      <summary>
+        <span class="problem-prefix">002</span>
+        <span class="problem-text">My Netlify URL changes every deploy</span>
+        <span class="problem-arrow">▸</span>
+      </summary>
+      <div class="solution">
+        <p>You're getting fresh URLs because each drop creates a new "site". To fix:</p>
+        <p>Create a free Netlify account → on your most recent deploy, click <strong>Site settings → Change site name</strong> → pick something memorable like <code>my-tracker-app</code>. Now redeploying to the same site keeps the URL.</p>
+      </div>
+    </details>
+
+    <details class="problem">
+      <summary>
+        <span class="problem-prefix">003</span>
+        <span class="problem-text">App is getting too complex / slow</span>
+        <span class="problem-arrow">▸</span>
+      </summary>
+      <div class="solution">
+        <p>Single-file HTML hits a ceiling around 1000–1500 lines of code. If you're past that, your AI may struggle to keep all parts working together.</p>
+        <p>Two options: <strong>(a)</strong> Trim features — keep only what you really use. <strong>(b)</strong> Move to a real builder — see Track 4.</p>
+      </div>
+    </details>
+
+    <details class="problem">
+      <summary>
+        <span class="problem-prefix">004</span>
+        <span class="problem-text">AI added a feature but the design feels off</span>
+        <span class="problem-arrow">▸</span>
+      </summary>
+      <div class="solution">
+        <p>The design drift is real. Two prompts that fix it:</p>
+        <p><code>Restyle the new feature to match the existing design language.</code></p>
+        <p><code>Polish the whole UI — keep all functionality identical but make the visual design cohesive and modern.</code></p>
+      </div>
+    </details>
+
+    <details class="problem">
+      <summary>
+        <span class="problem-prefix">005</span>
+        <span class="problem-text">I want to add multiple features at once</span>
+        <span class="problem-arrow">▸</span>
+      </summary>
+      <div class="solution">
+        <p>Resist the urge. Asking for 3 features in one prompt has a much higher break rate.</p>
+        <p>Add one. Test it. Save the working version. Then add the next.</p>
+      </div>
+    </details>
+
+  </div>
+</section>
+
+<section>
+  <div class="section-tag">// FULL WALKTHROUGH</div>
+  <h2>The slow version, if you <em>need it.</em></h2>
+
+  <div class="walkthrough">
+
+    <div class="walk-step">
+      <div class="walk-step-head">
+        <div class="walk-step-num">STEP 01</div>
+      </div>
+      <div class="walk-step-title">Go back to your AI chat</div>
+      <div class="walk-step-body">Use the same conversation where you built the app. Don't start a new one — your AI will lose context.</div>
+    </div>
+
+    <div class="walk-step">
+      <div class="walk-step-head">
+        <div class="walk-step-num">STEP 02</div>
+      </div>
+      <div class="walk-step-title">Describe one change</div>
+      <div class="walk-step-body">Use a prompt from the library above, or describe your own change in one sentence. <strong>Specificity wins:</strong> "add a green button labelled 'Save'" beats "make it better".</div>
+    </div>
+
+    <div class="walk-step">
+      <div class="walk-step-head">
+        <div class="walk-step-num">STEP 03</div>
+      </div>
+      <div class="walk-step-title">Test in the preview</div>
+      <div class="walk-step-body">Click around in the AI's preview. Did the new feature work? Did anything else break? If broken, ask the AI to fix the specific issue.</div>
+    </div>
+
+    <div class="walk-step">
+      <div class="walk-step-head">
+        <div class="walk-step-num">STEP 04</div>
+      </div>
+      <div class="walk-step-title">Download the new code</div>
+      <div class="walk-step-body">Just like Track 1 — use the Download button/icon (web: hover code block; Claude mobile: ⋯ on artifact; ChatGPT mobile: download icon). It saves to your Downloads folder.</div>
+    </div>
+
+    <div class="walk-step">
+      <div class="walk-step-head">
+        <div class="walk-step-num">STEP 05</div>
+      </div>
+      <div class="walk-step-title">Check the filename</div>
+      <div class="walk-step-body">
+        Your downloaded file should be named <code>index.html</code>. If it has a different name, rename it. No need to open it — the new code is already inside.<br><br>
+        <strong>If download didn't work:</strong> copy the code from your AI instead, and use the paste route at <code>pages.edgeone.ai/drop</code> in the next step.
+      </div>
+    </div>
+
+    <div class="walk-step">
+      <div class="walk-step-head">
+        <div class="walk-step-num">STEP 06</div>
+      </div>
+      <div class="walk-step-title">Redeploy</div>
+      <div class="walk-step-body">
+        <strong>Upload route (try first):</strong> Go to Netlify Drop and upload your file again. If you've claimed a Netlify site name, go to that site's <strong>Deploys</strong> tab and drop there to keep the same URL.<br><br>
+        <strong>Paste route (if upload won't work / on phone):</strong> Open <code>pages.edgeone.ai/drop</code> → Paste Code → paste → submit.
+      </div>
+    </div>
+
+    <div class="walk-step">
+      <div class="walk-step-head">
+        <div class="walk-step-num">STEP 07</div>
+      </div>
+      <div class="walk-step-title">Refresh and admire</div>
+      <div class="walk-step-body">Reload your URL. Your changes are live to the entire internet. Repeat from Step 02 with the next feature.</div>
+    </div>
+
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="container">
+    <p class="foot-line">Cleared Track 2? <strong>Track 3 takes you into proper developer territory.</strong></p>
+    <div class="foot-links">
+      <a href="https://mighty-parade-32e.notion.site/Jom-Jumpa-AI-Resource-Pack-358e11fbacdc80d7aee7d196dc0e0dd1" target="_blank">/resource-pack</a>
+      <a href="#" onclick="scrollTo(0,0); return false;">/top</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
