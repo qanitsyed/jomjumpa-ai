@@ -287,6 +287,100 @@ details.problem[open] .problem-arrow { transform: rotate(90deg); }
   text-underline-offset: 2px;
 }
 
+/* PHASE 2 — KEEP GOING */
+.phase-break {
+  margin: 36px 0 12px;
+  padding: 30px 26px;
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-deep) 100%);
+  border-radius: 14px;
+  color: var(--paper);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.phase-break::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--gold);
+}
+.phase-break .phase-eyebrow {
+  font-size: 10.5px;
+  letter-spacing: 2.5px;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+.phase-break h2 {
+  color: var(--paper);
+  margin-bottom: 8px;
+  font-size: 30px;
+}
+.phase-break h2 em { color: var(--gold); font-style: italic; }
+.phase-break p {
+  font-size: 15.5px;
+  color: rgba(250, 248, 244, 0.85);
+  max-width: 460px;
+  margin: 0 auto;
+  line-height: 1.55;
+}
+
+.prompts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+.prompt-card {
+  background: white;
+  border: 1.5px solid var(--rule);
+  border-radius: 10px;
+  padding: 14px 16px;
+  transition: border-color 0.2s ease;
+}
+.prompt-card:hover { border-color: var(--green); }
+.prompt-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.prompt-tag {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--green-deep);
+  font-weight: 700;
+  background: rgba(46, 125, 91, 0.1);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+.prompt-title {
+  font-family: 'Fraunces', serif;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+}
+.prompt-body {
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.prompt-body .accent {
+  color: var(--green-deep);
+  font-weight: 600;
+}
+.prompt-body code {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  background: var(--paper-warm);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 12.5px;
+  color: var(--ink);
+}
+
 /* FOOTER */
 footer {
   text-align: center;
@@ -569,13 +663,180 @@ footer {
   </div>
 </section>
 
+<!-- ============================================================
+     PHASE 2 — KEEP GOING
+     For anyone who's got something live and wants to push further.
+     Independent of the main track flow above.
+     ============================================================ -->
+<div class="phase-break">
+  <div class="phase-eyebrow">PHASE 2 · KEEP GOING</div>
+  <h2>Now <em>make it yours.</em></h2>
+  <p>Your app is live. The first prompt got you here. The next few will turn it from a sketch into something you'd actually use on Monday.</p>
+</div>
+
+<section>
+  <div class="section-tag">THE LOOP</div>
+  <h2>The <em>iterate-redeploy</em> rhythm.</h2>
+  <div class="summary">
+    <div class="summary-step">
+      <div class="step-num">1</div>
+      <div class="step-text">Open your existing AI chat. Tell it what to add &mdash; <strong>one feature at a time.</strong></div>
+    </div>
+    <div class="summary-step">
+      <div class="step-num">2</div>
+      <div class="step-text">Check the preview. If something broke, say <strong>"undo the last change"</strong> or describe exactly what went wrong.</div>
+    </div>
+    <div class="summary-step">
+      <div class="step-num">3</div>
+      <div class="step-text">Happy with it? <strong>Download the new file</strong> the same way as before.</div>
+    </div>
+    <div class="summary-step">
+      <div class="step-num">4</div>
+      <div class="step-text">Redeploy: re-upload to Netlify, or re-paste at <code>pages.edgeone.ai/drop</code>.</div>
+    </div>
+    <div class="summary-step">
+      <div class="step-num">5</div>
+      <div class="step-text"><strong>Tip:</strong> on Netlify, claim a site name once &mdash; your URL stays the same across deploys.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-tag">PROMPT LIBRARY</div>
+  <h2>Feature prompts that <em>just work.</em></h2>
+  <p class="intro-line">Copy any of these, paste into your AI chat, watch the magic. Each adds one capability without breaking the rest.</p>
+
+  <div class="prompts">
+
+    <div class="prompt-card">
+      <div class="prompt-head">
+        <span class="prompt-tag">UX</span>
+        <span class="prompt-title">Add dark mode</span>
+      </div>
+      <div class="prompt-body">Add a dark mode toggle in the top-right. Use CSS variables so colours switch cleanly. Remember the user's choice with localStorage. Keep the rest of the app unchanged.</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-head">
+        <span class="prompt-tag">DATA</span>
+        <span class="prompt-title">Save data between visits</span>
+      </div>
+      <div class="prompt-body">Use localStorage to save all user entries so they persist when I close the browser and come back. Load them automatically on page open.</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-head">
+        <span class="prompt-tag">VISUAL</span>
+        <span class="prompt-title">Add a chart</span>
+      </div>
+      <div class="prompt-body">Add a simple bar or line chart showing the data over time. Use inline SVG or Canvas &mdash; <span class="accent">no external chart libraries.</span> Keep it clean and minimal.</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-head">
+        <span class="prompt-tag">POLISH</span>
+        <span class="prompt-title">Make it look more polished</span>
+      </div>
+      <div class="prompt-body">Improve the visual design. Use a clean modern aesthetic with proper spacing, a refined colour palette (max 3 colours), and good typography. Mobile-friendly. <span class="accent">Same single HTML file.</span></div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-head">
+        <span class="prompt-tag">FUNCTION</span>
+        <span class="prompt-title">Add export / share</span>
+      </div>
+      <div class="prompt-body">Add a button to download my results as a PNG image, or copy a shareable summary to my clipboard. Use built-in browser APIs only.</div>
+    </div>
+
+    <div class="prompt-card">
+      <div class="prompt-head">
+        <span class="prompt-tag">I18N</span>
+        <span class="prompt-title">Add a language toggle</span>
+      </div>
+      <div class="prompt-body">Add a toggle in the top-right that switches the interface between English and Bahasa Melayu. Translate all labels and buttons cleanly.</div>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <div class="section-tag">WHEN THINGS GO SIDEWAYS</div>
+  <h2>Iteration <em>got messy?</em></h2>
+  <p class="intro-line">The most common rough patches when you're changing a working app &mdash; and the one-line fix for each.</p>
+
+  <div class="problems">
+
+    <details class="problem">
+      <summary>
+        <div class="problem-icon">🔄</div>
+        <div class="problem-text">AI broke my working app</div>
+        <div class="problem-arrow">▸</div>
+      </summary>
+      <div class="solution">
+        <p>Don't panic. Say: <code>Revert the last change &mdash; go back to the previous working version.</code></p>
+        <p>Still wrong? Scroll up in your chat to the last good code block and copy that one instead. Your old code is still there in the chat history.</p>
+      </div>
+    </details>
+
+    <details class="problem">
+      <summary>
+        <div class="problem-icon">🔗</div>
+        <div class="problem-text">My Netlify URL changes every deploy</div>
+        <div class="problem-arrow">▸</div>
+      </summary>
+      <div class="solution">
+        <p>Each fresh drop creates a new "site". To fix it once:</p>
+        <p>Create a free Netlify account &rarr; on your most recent deploy, click <strong>Site settings &rarr; Change site name</strong> &rarr; pick something memorable like <code>my-tracker-app</code>. Now redeploying keeps the URL.</p>
+      </div>
+    </details>
+
+    <details class="problem">
+      <summary>
+        <div class="problem-icon">📦</div>
+        <div class="problem-text">App is getting too complex / slow</div>
+        <div class="problem-arrow">▸</div>
+      </summary>
+      <div class="solution">
+        <p>Single-file HTML hits a ceiling around 1,000&ndash;1,500 lines of code. Past that, your AI may struggle to hold all the pieces together.</p>
+        <p>Two options: <strong>(a)</strong> trim features &mdash; keep only what you really use, or <strong>(b)</strong> move to a real repo and database &mdash; see Tracks 2&ndash;4.</p>
+      </div>
+    </details>
+
+    <details class="problem">
+      <summary>
+        <div class="problem-icon">🎨</div>
+        <div class="problem-text">New feature looks off &mdash; design drifted</div>
+        <div class="problem-arrow">▸</div>
+      </summary>
+      <div class="solution">
+        <p>Design drift is real. Two prompts that fix it:</p>
+        <p><code>Restyle the new feature to match the existing design language.</code></p>
+        <p><code>Polish the whole UI &mdash; keep all functionality identical but make the visual design cohesive and modern.</code></p>
+      </div>
+    </details>
+
+    <details class="problem">
+      <summary>
+        <div class="problem-icon">⚡</div>
+        <div class="problem-text">Tempted to add multiple features at once</div>
+        <div class="problem-arrow">▸</div>
+      </summary>
+      <div class="solution">
+        <p>Resist the urge. Asking for 3 features in one prompt has a much higher break rate.</p>
+        <p>Add one. Test it. Save the working version. Then add the next.</p>
+      </div>
+    </details>
+
+  </div>
+</section>
+
 </div>
 
 <footer>
   <div class="container">
     <p class="foot-line">Still stuck? <strong>Find Q or Wafiy in the room — that's what we're here for.</strong></p>
     <div class="foot-links">
-      <a href="https://mighty-parade-32e.notion.site/Jom-Jumpa-AI-Resource-Pack-358e11fbacdc80d7aee7d196dc0e0dd1" target="_blank">Resource Pack</a>
+      <a href="resource-pack.html">Resource Pack</a>
       <a href="#" onclick="scrollTo(0,0); return false;">Back to top</a>
     </div>
   </div>

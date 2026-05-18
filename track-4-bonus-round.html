@@ -415,17 +415,17 @@ footer {
     <div class="path-picker-title">// CHOOSE ONE</div>
     <ul class="path-list">
       <li>
-        <a href="#path-supabase">
+        <a href="#path-codespaces">
           <span class="path-num">PATH_A</span>
-          <span class="path-name">Add a real database with Supabase</span>
-          <span class="path-time">~30 min</span>
+          <span class="path-name">Open Codespaces &mdash; watch Copilot read your AGENTS.md</span>
+          <span class="path-time">~15 min</span>
         </a>
       </li>
       <li>
-        <a href="#path-codespaces">
+        <a href="#path-supabase">
           <span class="path-num">PATH_B</span>
-          <span class="path-name">Get a cloud dev environment via GitHub Codespaces</span>
-          <span class="path-time">~15 min</span>
+          <span class="path-name">Add a real database with Supabase</span>
+          <span class="path-time">~30 min</span>
         </a>
       </li>
       <li>
@@ -439,20 +439,20 @@ footer {
   </div>
 </header>
 
-<!-- PATH A: SUPABASE -->
-<section id="path-supabase">
-  <div class="section-marker">// PATH_A · 30 MIN</div>
-  <h2>Add a <span class="accent">real database</span> with Supabase</h2>
-  <p class="lead">Until now, your app forgot everything when the browser closed (or kept it only on one device via localStorage). Supabase gives you a free hosted database — your app can now remember things across devices, across users, across time.</p>
+<!-- PATH A: CODESPACES -->
+<section id="path-codespaces">
+  <div class="section-marker">// PATH_A · 15 MIN</div>
+  <h2>Open <span class="accent">Codespaces</span> &mdash; watch Copilot read your AGENTS.md</h2>
+  <p class="lead">Codespaces is a full VS Code editor that runs in your browser, attached to your GitHub repo. No install, no setup &mdash; you get a real editor, terminal, and AI assistant on any device. And the moment you open Copilot, the <code>AGENTS.md</code> you wrote in Track 3 starts paying you back.</p>
 
   <div class="why-this">
     <div class="why-card">
       <div class="why-card-title">WHY THIS PATH</div>
-      <p>Single-file HTML hits a real ceiling when you need persistence beyond one browser. Supabase lifts that ceiling without changing your stack.</p>
+      <p>Until now you've been pasting code in and out of a chat. Codespaces gives you a real editor with an AI that can actually <em>see</em> your whole project &mdash; including your <code>AGENTS.md</code>. The conventions you wrote down get applied automatically.</p>
     </div>
     <div class="why-card">
       <div class="why-card-title">PREREQ</div>
-      <p>A working app from Track 1 or 2 with some kind of data (entries, todos, scores, anything).</p>
+      <p>The GitHub repo from Track 2, with the <code>AGENTS.md</code> from Track 3 committed at its root. Codespaces uses GitHub's free hours (120 hr/month).</p>
     </div>
   </div>
 
@@ -461,10 +461,10 @@ footer {
     <div class="step-block">
       <div class="step-block-num">A.01</div>
       <div class="step-block-body">
-        <div class="step-block-title">Create a Supabase project</div>
+        <div class="step-block-title">Open Codespaces from your repo</div>
         <div class="step-block-desc">
-          <p>Sign up at <a href="https://supabase.com" target="_blank">supabase.com</a> (free tier is generous — no credit card needed). Click <strong>New project</strong>. Pick a name, set a database password (save it somewhere safe), choose the Singapore region for low latency.</p>
-          <p>Wait ~2 minutes for it to provision.</p>
+          <p>Go to your repo on <a href="https://github.com" target="_blank">github.com</a>. Click the green <strong>Code</strong> button &rarr; <strong>Codespaces</strong> tab &rarr; <strong>Create codespace on main</strong>.</p>
+          <p>Wait ~60 seconds. A full VS Code editor loads in your browser, with your whole repo already cloned in.</p>
         </div>
       </div>
     </div>
@@ -472,13 +472,10 @@ footer {
     <div class="step-block">
       <div class="step-block-num">A.02</div>
       <div class="step-block-body">
-        <div class="step-block-title">Pick a feature that needs a database</div>
+        <div class="step-block-title">Open your index.html</div>
         <div class="step-block-desc">
-          <p>The right feature is one your app couldn't do with localStorage alone. Examples:</p>
-          <p>• <strong>Shared notes wall</strong> — everyone using the app sees everyone's notes<br>
-          • <strong>Cross-device sync</strong> — log your savings from phone, see it on laptop<br>
-          • <strong>Public leaderboard</strong> — quiz scores everyone can see<br>
-          • <strong>Comment thread</strong> — visitors leave feedback on your tool</p>
+          <p>In the left sidebar (the file explorer), click <code>index.html</code>. The full code opens in the editor &mdash; with syntax highlighting, autocomplete, and Git built in.</p>
+          <p>You should also see <code>AGENTS.md</code> sitting right there in the file list. That's the file that's about to do the heavy lifting.</p>
         </div>
       </div>
     </div>
@@ -486,23 +483,11 @@ footer {
     <div class="step-block">
       <div class="step-block-num">A.03</div>
       <div class="step-block-body">
-        <div class="step-block-title">Get your project keys</div>
+        <div class="step-block-title">Preview your app live</div>
         <div class="step-block-desc">
-          <p>In Supabase dashboard → <strong>Project Settings → API</strong>. You need two things:</p>
-          <p>• <code>Project URL</code> — looks like <code>https://abcdefg.supabase.co</code><br>
-          • <code>anon public key</code> — a long JWT string starting with <code>eyJh...</code></p>
-          <p>Copy both. You're about to put them in your HTML file so the app can talk to your database.</p>
-          <div class="warning" style="margin-top: 12px;">
-            <strong>⚠ KEY SAFETY — READ THIS:</strong> You are about to paste a real key into your code. Understand what that means before you proceed.
-            <br><br>
-            <strong>What the anon key does:</strong> It gives anyone who sees your HTML file access to read and write your database. Since your HTML file is public (it's a website), the key is effectively public too.
-            <br><br>
-            <strong>Why it's okay for this exercise:</strong> The anon key only has access to what you explicitly allow in your Supabase policies. You'll set it up to allow public reads/writes for this demo — which is fine for a test app with no sensitive data.
-            <br><br>
-            <strong>What you must never do:</strong> Don't paste a <em>service role key</em> (the other key in Supabase) anywhere — that one bypasses all security rules. And never paste any key into an AI chat or share it publicly in a real app with real users or real data.
-            <br><br>
-            <strong>After tonight:</strong> Delete this Supabase project, or rotate the key from the Supabase dashboard. Treat it as a demo key — not something to leave running forever.
-          </div>
+          <p>Open the terminal (View menu &rarr; Terminal, or <code>Ctrl+`</code>). Run:</p>
+          <div class="cmd"><span class="prompt-char">$ </span><span class="keyword">python3</span> -m http.server <span class="string">8000</span></div>
+          <p>Codespaces will pop up an "Open in Browser" notification. Click it. Your app loads &mdash; now you can edit, save (<code>Ctrl+S</code>), refresh, and see changes instantly, no redeploying.</p>
         </div>
       </div>
     </div>
@@ -510,13 +495,10 @@ footer {
     <div class="step-block">
       <div class="step-block-num">A.04</div>
       <div class="step-block-body">
-        <div class="step-block-title">Ask your AI to wire it up</div>
+        <div class="step-block-title">Install GitHub Copilot</div>
         <div class="step-block-desc">
-          <p>Go back to Claude/ChatGPT with your current app. Send this prompt (filling in your actual values):</p>
-          <div class="ai-prompt">
-            <span class="ai-prompt-tag">PROMPT_TEMPLATE</span>
-            Add Supabase to my existing app. Create a table called <code>entries</code> with columns: <code>id</code> (uuid, primary key), <code>created_at</code> (timestamp), <code>content</code> (text). Replace localStorage with Supabase reads and writes. Use the Supabase JS client loaded from a CDN — keep this as a single HTML file. My Supabase URL is <code>YOUR_URL_HERE</code> and my anon key is <code>YOUR_ANON_KEY_HERE</code>. Also write me the SQL to create the table so I can run it in the Supabase SQL editor.
-          </div>
+          <p>Left sidebar &rarr; Extensions icon &rarr; search <strong>"GitHub Copilot"</strong> &rarr; Install. Also install <strong>"GitHub Copilot Chat"</strong> &mdash; the conversational sibling. (Free for students and verified open-source maintainers; otherwise free trial then paid.)</p>
+          <p>Sign in when prompted. You should now see Copilot suggestions appear inline as you type, and a chat icon appear in the sidebar.</p>
         </div>
       </div>
     </div>
@@ -524,10 +506,17 @@ footer {
     <div class="step-block">
       <div class="step-block-num">A.05</div>
       <div class="step-block-body">
-        <div class="step-block-title">Create the table in Supabase</div>
+        <div class="step-block-title">Watch Copilot read your AGENTS.md</div>
         <div class="step-block-desc">
-          <p>Your AI will give you SQL like <code>CREATE TABLE entries (...)</code>. Go to Supabase dashboard → <strong>SQL Editor</strong> → paste the SQL → <strong>Run</strong>.</p>
-          <p>Then go to <strong>Authentication → Policies</strong> → for the <code>entries</code> table, enable a basic policy allowing reads/writes (Supabase will guide you with templates).</p>
+          <p><strong>This is the payoff moment.</strong></p>
+          <p>Open Copilot Chat (sidebar icon or <code>Ctrl+Alt+I</code>). Don't paste any context. Just ask something vague like:</p>
+          <div class="ai-prompt">
+            <span class="ai-prompt-tag">FRESH_PROMPT</span>
+            Add a contact form to my site.
+          </div>
+          <p>Copilot replies &mdash; and references your conventions. The colours you picked. The "no external libraries" rule. The structure of your single HTML file. You didn't say any of that in this chat.</p>
+          <p>It read <code>AGENTS.md</code> from your repo before answering. The brief you wrote in Track 3 is now doing its job, hands-free, for every future session.</p>
+          <p><em>Try one more:</em> ask <code>"what does this project do?"</code> &mdash; you'll get back a tight summary that matches your overview almost word-for-word. That's the file working.</p>
         </div>
       </div>
     </div>
@@ -535,12 +524,15 @@ footer {
     <div class="step-block">
       <div class="step-block-num">A.06</div>
       <div class="step-block-body">
-        <div class="step-block-title">Deploy and test</div>
+        <div class="step-block-title">Commit, push &mdash; and watch it go live</div>
         <div class="step-block-desc">
-          <p>Copy the updated HTML, redeploy (same flow as Track 1/2/3). Open the URL on two devices. Add an entry from one — refresh the other. <strong>Magic.</strong></p>
+          <p>Made changes you want to keep? Left sidebar &rarr; Source Control icon (the branchy symbol) &rarr; type a commit message &rarr; <strong>Commit</strong> &rarr; <strong>Sync</strong>.</p>
+          <p>Your code is now pushed to GitHub. <strong>The Netlify connection you set up in Track 2 picks it up automatically</strong> &mdash; a new deploy fires within ~30 seconds.</p>
+          <p>Open your Netlify dashboard &rarr; find your site &rarr; <strong>Deploys</strong> tab. You'll see the new deploy triggered. When it shows "Published", your live URL is updated.</p>
+          <p>The full loop: edit in Codespaces &rarr; commit &rarr; push &rarr; Netlify rebuilds &rarr; live. No manual upload, ever again.</p>
         </div>
         <div class="outcome">
-          <strong>OUTCOME:</strong> Your app now has a real backend. Data persists forever, syncs across devices, is shareable with the world.
+          <strong>OUTCOME:</strong> A real developer setup &mdash; editor, terminal, AI assistant, version control &mdash; all in your browser. Every commit goes live automatically. Your AGENTS.md briefs every Copilot session, no setup needed.
         </div>
       </div>
     </div>
@@ -548,20 +540,20 @@ footer {
   </div>
 </section>
 
-<!-- PATH B: CODESPACES -->
-<section id="path-codespaces">
-  <div class="section-marker">// PATH_B · 15 MIN</div>
-  <h2>Get a <span class="accent">cloud dev environment</span> with Codespaces</h2>
-  <p class="lead">Codespaces is a full VS Code editor that runs in your browser, attached to your GitHub repo. No install, no setup — but you get a real terminal, file tree, and code editor. This is where "vibe coding" stops being a toy and starts being a craft.</p>
+<!-- PATH B: SUPABASE -->
+<section id="path-supabase">
+  <div class="section-marker">// PATH_B · 30 MIN</div>
+  <h2>Add a <span class="accent">real database</span> with Supabase</h2>
+  <p class="lead">Until now, your app forgot everything when the browser closed (or kept it only on one device via localStorage). Supabase gives you a free hosted database &mdash; your app can now remember things across devices, across users, across time.</p>
 
   <div class="why-this">
     <div class="why-card">
       <div class="why-card-title">WHY THIS PATH</div>
-      <p>Working in the GitHub web UI is fine for small edits. For anything serious, you want a real editor. Codespaces gives you one in a browser tab.</p>
+      <p>Single-file HTML hits a real ceiling when you need persistence beyond one browser. Supabase lifts that ceiling without changing your stack.</p>
     </div>
     <div class="why-card">
       <div class="why-card-title">PREREQ</div>
-      <p>The GitHub repo you set up in Track 3. Codespaces uses GitHub's free hours (120 hr/month).</p>
+      <p>A working app from Track 1 with some kind of data (entries, todos, scores, anything).</p>
     </div>
   </div>
 
@@ -570,10 +562,10 @@ footer {
     <div class="step-block">
       <div class="step-block-num">B.01</div>
       <div class="step-block-body">
-        <div class="step-block-title">Open Codespaces from your repo</div>
+        <div class="step-block-title">Create a Supabase project</div>
         <div class="step-block-desc">
-          <p>Go to your repo on <a href="https://github.com" target="_blank">github.com</a>. Click the green <strong>Code</strong> button → <strong>Codespaces</strong> tab → <strong>Create codespace on main</strong>.</p>
-          <p>Wait ~60 seconds. A full VS Code editor loads in your browser.</p>
+          <p>Sign up at <a href="https://supabase.com" target="_blank">supabase.com</a> (free tier is generous &mdash; no credit card needed). Click <strong>New project</strong>. Pick a name, set a database password (save it somewhere safe), choose the Singapore region for low latency.</p>
+          <p>Wait ~2 minutes for it to provision.</p>
         </div>
       </div>
     </div>
@@ -581,9 +573,13 @@ footer {
     <div class="step-block">
       <div class="step-block-num">B.02</div>
       <div class="step-block-body">
-        <div class="step-block-title">Open your index.html</div>
+        <div class="step-block-title">Pick a feature that needs a database</div>
         <div class="step-block-desc">
-          <p>In the left sidebar (file explorer), click <code>index.html</code>. The full code opens in the editor. You can edit here like any text editor — but with syntax highlighting, autocomplete, and Git built in.</p>
+          <p>The right feature is one your app couldn't do with localStorage alone. Examples:</p>
+          <p>&bull; <strong>Shared notes wall</strong> &mdash; everyone using the app sees everyone's notes<br>
+          &bull; <strong>Cross-device sync</strong> &mdash; log your savings from phone, see it on laptop<br>
+          &bull; <strong>Public leaderboard</strong> &mdash; quiz scores everyone can see<br>
+          &bull; <strong>Comment thread</strong> &mdash; visitors leave feedback on your tool</p>
         </div>
       </div>
     </div>
@@ -591,11 +587,23 @@ footer {
     <div class="step-block">
       <div class="step-block-num">B.03</div>
       <div class="step-block-body">
-        <div class="step-block-title">Preview your app live</div>
+        <div class="step-block-title">Get your project keys</div>
         <div class="step-block-desc">
-          <p>Open the terminal (View menu → Terminal, or <code>Ctrl+`</code>). Run:</p>
-          <div class="cmd"><span class="prompt-char">$ </span><span class="keyword">python3</span> -m http.server <span class="string">8000</span></div>
-          <p>Codespaces will pop up an "Open in Browser" notification. Click it. Your app loads — now you can edit code, save (<code>Ctrl+S</code>), refresh — see changes instantly without redeploying.</p>
+          <p>In Supabase dashboard → <strong>Project Settings → API</strong>. You need two things:</p>
+          <p>• <code>Project URL</code> — looks like <code>https://abcdefg.supabase.co</code><br>
+          • <code>publishable key</code> — starts with <code>sb_publishable_...</code> (older projects show it as the <em>anon</em> key — a JWT starting with <code>eyJh...</code>). Both work the same way.</p>
+          <p>Copy both. You're about to put them in your HTML file so the app can talk to your database.</p>
+          <div class="warning" style="margin-top: 12px;">
+            <strong>⚠ TWO KEYS, ONE FOOTGUN:</strong> Supabase gives you two keys. One is meant to be public, the other is the one to fear.
+            <br><br>
+            <strong>Publishable / anon key — safe to ship.</strong> This is the one you paste into your HTML. It's designed to be public — any user can view-source your site and see it. Supabase calls it "publishable" for exactly that reason.
+            <br><br>
+            <strong>What keeps it safe:</strong> Row-Level Security policies. The key can only do what your policies allow. Without policies, the key is harmless because every request gets denied. With policies, the key gets exactly the access you granted — nothing more.
+            <br><br>
+            <strong>Secret key (<code>sb_secret_...</code> or <em>service_role</em>) — never in client code.</strong> This one bypasses every policy. It belongs in server-side code, environment variables, or an Edge Function. Never paste it into an HTML file, never commit it to GitHub, never share it in chat.
+            <br><br>
+            <strong>The real rule of thumb:</strong> if a key starts with <code>publishable_</code> or is labelled "anon", ship it. If it starts with <code>secret_</code> or is labelled "service_role", treat it like a password.
+          </div>
         </div>
       </div>
     </div>
@@ -603,10 +611,13 @@ footer {
     <div class="step-block">
       <div class="step-block-num">B.04</div>
       <div class="step-block-body">
-        <div class="step-block-title">Install the GitHub Copilot extension</div>
+        <div class="step-block-title">Ask your AI to wire it up</div>
         <div class="step-block-desc">
-          <p>Left sidebar → Extensions icon → search "GitHub Copilot" → Install. (Free for students and verified open-source maintainers; otherwise paid.)</p>
-          <p>Now you have inline AI completions as you type. A whole new way to build — alongside the AI rather than handing it everything.</p>
+          <p>Go back to Claude/ChatGPT with your current app. Send this prompt (filling in your actual values):</p>
+          <div class="ai-prompt">
+            <span class="ai-prompt-tag">PROMPT_TEMPLATE</span>
+            Add Supabase to my existing app. Create a table called <code>entries</code> with columns: <code>id</code> (uuid, primary key), <code>created_at</code> (timestamp), <code>content</code> (text). Replace localStorage with Supabase reads and writes. Use the Supabase JS client loaded from a CDN &mdash; keep this as a single HTML file. My Supabase URL is <code>YOUR_URL_HERE</code> and my anon key is <code>YOUR_ANON_KEY_HERE</code>. Also write me the SQL to create the table so I can run it in the Supabase SQL editor.
+          </div>
         </div>
       </div>
     </div>
@@ -614,15 +625,23 @@ footer {
     <div class="step-block">
       <div class="step-block-num">B.05</div>
       <div class="step-block-body">
-        <div class="step-block-title">Commit, push — and watch it go live</div>
+        <div class="step-block-title">Create the table in Supabase</div>
         <div class="step-block-desc">
-          <p>Made changes? Left sidebar → Source Control icon (the branchy symbol) → type a commit message → <strong>Commit</strong> → <strong>Sync</strong>.</p>
-          <p>Your code is now pushed to GitHub. <strong>If you connected Netlify to this repo in Track 3, your site auto-deploys within ~30 seconds.</strong></p>
-          <p>To watch it happen: open your Netlify dashboard → find your site → click the <strong>Deploys</strong> tab. You'll see a new deploy triggered automatically. When it shows "Published", your live URL is updated.</p>
-          <p>This is the full loop: edit in Codespaces → commit → push → Netlify rebuilds → live. No manual upload, ever again.</p>
+          <p>Your AI will give you SQL like <code>CREATE TABLE entries (...)</code>. Go to Supabase dashboard &rarr; <strong>SQL Editor</strong> &rarr; paste the SQL &rarr; <strong>Run</strong>.</p>
+          <p>Then go to <strong>Authentication &rarr; Policies</strong> &rarr; for the <code>entries</code> table, enable a basic policy allowing reads/writes (Supabase will guide you with templates).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-block-num">B.06</div>
+      <div class="step-block-body">
+        <div class="step-block-title">Deploy and test</div>
+        <div class="step-block-desc">
+          <p>Copy the updated HTML, redeploy (same flow as Track 1, or commit it to your Track 2 repo for auto-deploy). Open the URL on two devices. Add an entry from one &mdash; refresh the other. <strong>Magic.</strong></p>
         </div>
         <div class="outcome">
-          <strong>OUTCOME:</strong> You have a real developer setup — editor, terminal, AI assistant, version control — all in your browser. Every commit goes live automatically. Pick up any device, you're back at work.
+          <strong>OUTCOME:</strong> Your app now has a real backend. Data persists forever, syncs across devices, is shareable with the world.
         </div>
       </div>
     </div>
@@ -692,7 +711,7 @@ footer {
       <div class="step-block-body">
         <div class="step-block-title">Navigate to your repo &amp; launch</div>
         <div class="step-block-desc">
-          <p>Use the same repo you set up in Track 3 — this way any changes Claude Code makes will auto-deploy to your live Netlify site.</p>
+          <p>Use the same repo you set up in Track 2 &mdash; this way any changes Claude Code makes will auto-deploy to your live Netlify site.</p>
           <p>First, clone your repo to your laptop if you haven't already:</p>
           <div class="cmd"><span class="prompt-char">$ </span>git clone https://github.com/<span class="string">YOUR_USERNAME/YOUR_REPO_NAME</span>.git
 <span class="prompt-char">$ </span><span class="keyword">cd</span> YOUR_REPO_NAME</div>
@@ -760,7 +779,7 @@ footer {
     The shift you've made tonight is not from "non-coder" to "coder." It's from <em>consumer of software</em> to <em>maker of software.</em> That's the actual gap most people never cross. <strong>You did, in one evening.</strong>
   </p>
   <p class="closer" style="margin-top: 14px;">
-    Track 1 gave you the proof. Track 2 gave you the iteration loop. Track 3 gave you a real deployment pipeline. Track 4 gave you a sense of how deep the rabbit hole goes. The rest is just hours of practice.
+    Track 1 gave you the proof. Track 2 gave you a real deployment pipeline. Track 3 taught your repo to brief the next agent. Track 4 gave you a sense of how deep the rabbit hole goes. The rest is just hours of practice.
   </p>
   <p class="closer" style="margin-top: 14px;">
     If you ever build something you're proud of, share it. Wall of Apps is open for life.
@@ -776,7 +795,7 @@ footer {
       keep building. the rest is a lifetime's worth.
     </p>
     <div class="foot-links">
-      <a href="https://mighty-parade-32e.notion.site/Jom-Jumpa-AI-Resource-Pack-358e11fbacdc80d7aee7d196dc0e0dd1" target="_blank">/resource-pack</a>
+      <a href="resource-pack.html">/resource-pack</a>
       <a href="https://qals.substack.com" target="_blank">/q-substack</a>
       <a href="#" onclick="scrollTo(0,0); return false;">/top</a>
     </div>

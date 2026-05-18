@@ -128,7 +128,25 @@ a { color: inherit; }
 .nav-cta:hover { background: var(--coral); }
 
 @media (max-width: 760px) {
-  .nav-links { display: none; }
+  .nav-inner {
+    flex-wrap: wrap;
+    padding: 10px 18px;
+    gap: 10px 14px;
+  }
+  .nav-links {
+    order: 3;
+    flex-basis: 100%;
+    justify-content: center;
+    gap: 18px;
+    font-size: 11.5px;
+    border-top: 1px solid var(--rule);
+    padding-top: 10px;
+    margin-top: 2px;
+  }
+  .brand { font-size: 16px; }
+}
+@media (max-width: 380px) {
+  .nav-links { gap: 14px; font-size: 11px; }
 }
 
 /* ============================================================
@@ -598,6 +616,14 @@ h1.hero-title .ai {
 .t-3 { --track-color: var(--t3); }
 .t-4 { --track-color: var(--t4); }
 
+.track-desc code {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--paper-warm);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
 /* ============================================================
    BUILT TONIGHT
    ============================================================ */
@@ -734,6 +760,23 @@ h1.hero-title .ai {
   gap: 6px;
 }
 .build-url::before { content: "↗"; color: var(--coral); }
+
+.build-desc {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.build-credit {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.3px;
+  color: var(--ink-mute);
+}
+.build-credit::before { content: "by "; opacity: 0.7; }
 
 /* ============================================================
    COMMUNITIES — editorial list
@@ -934,11 +977,11 @@ h1.hero-title .ai {
 
 .connect-grid {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 16px;
   margin-bottom: 28px;
+  max-width: 560px;
 }
-@media (max-width: 760px) { .connect-grid { grid-template-columns: 1fr; } }
 
 .connect-card {
   background: var(--dark-2);
@@ -1063,11 +1106,9 @@ footer {
   <div class="nav-inner">
     <a href="#top" class="brand">Jom Jumpa <span class="hash">#</span><em>AI</em></a>
     <div class="nav-links">
-      <a href="#rule">rule</a>
       <a href="#tracks">tracks</a>
-      <a href="#built">built tonight</a>
-      <a href="#community">community</a>
-      <a href="#tools">tools</a>
+      <a href="#built">wall of apps</a>
+      <a href="resource-pack.html">resource pack</a>
     </div>
     <a href="#connect" class="nav-cta">join_</a>
   </div>
@@ -1158,7 +1199,7 @@ footer {
           </div>
         </div>
         <h3>Idea to URL in <em>one prompt</em>.</h3>
-        <p class="track-desc">Open Lovable. Type the magic prompt. Watch your app appear. Get the link. Send it to someone.</p>
+        <p class="track-desc">Open Claude or ChatGPT. Describe your idea, end with the golden rule. Download the HTML. Drop it on Netlify. You're live.</p>
         <div class="track-outcome">
           <span class="label">You'll have</span>
           <span class="val">A live web app at a URL anyone can visit.</span>
@@ -1166,26 +1207,9 @@ footer {
         <span class="track-cta">Open Track 1 →</span>
       </a>
 
-      <a href="track-2-make-it-yours.html" class="track t-2 reveal">
+      <a href="track-2-dev-mode.html" class="track t-2 reveal">
         <div class="track-top">
           <span class="track-number">02</span>
-          <div class="track-id">
-            <span class="track-name">Make It Yours</span>
-            <span class="track-for">Got an idea</span>
-          </div>
-        </div>
-        <h3>Iterate until it feels <em>like yours</em>.</h3>
-        <p class="track-desc">Edit by talking. Change copy, colours, layout. Learn the prompting rhythm that makes the AI listen.</p>
-        <div class="track-outcome">
-          <span class="label">You'll have</span>
-          <span class="val">An app that reflects your taste, not the AI's defaults.</span>
-        </div>
-        <span class="track-cta">Open Track 2 →</span>
-      </a>
-
-      <a href="track-3-dev-mode.html" class="track t-3 reveal">
-        <div class="track-top">
-          <span class="track-number">03</span>
           <div class="track-id">
             <span class="track-name">Dev Mode</span>
             <span class="track-for">Curious tinkerer</span>
@@ -1196,6 +1220,23 @@ footer {
         <div class="track-outcome">
           <span class="label">You'll have</span>
           <span class="val">A repo on GitHub that auto-deploys on every push.</span>
+        </div>
+        <span class="track-cta">Open Track 2 →</span>
+      </a>
+
+      <a href="track-3-spec-it-out.html" class="track t-3 reveal">
+        <div class="track-top">
+          <span class="track-number">03</span>
+          <div class="track-id">
+            <span class="track-name">Spec It Out</span>
+            <span class="track-for">Building habits</span>
+          </div>
+        </div>
+        <h3>Teach your repo to <em>brief the next agent</em>.</h3>
+        <p class="track-desc">One <code>AGENTS.md</code> file at the root of your project. Any AI tool you bring in tomorrow already knows what it's looking at.</p>
+        <div class="track-outcome">
+          <span class="label">You'll have</span>
+          <span class="val">A repo that briefs the next AI session for you.</span>
         </div>
         <span class="track-cta">Open Track 3 →</span>
       </a>
@@ -1208,11 +1249,11 @@ footer {
             <span class="track-for">Going further</span>
           </div>
         </div>
-        <h3>Add a database. Add <em>real magic</em>.</h3>
-        <p class="track-desc">Supabase, the Claude API, agent flows. The level where your app stops being a toy and starts being a tool.</p>
+        <h3>Three <em>bonus</em> paths. Pick one.</h3>
+        <p class="track-desc">Open Codespaces and watch Copilot read your <code>AGENTS.md</code>, add a real database with Supabase, or install Claude Code + Superpowers.</p>
         <div class="track-outcome">
           <span class="label">You'll have</span>
-          <span class="val">An app with persistence, auth, or AI of its own.</span>
+          <span class="val">A bigger toolkit &mdash; and a clearer sense of what to try on Monday.</span>
         </div>
         <span class="track-cta">Open Track 4 →</span>
       </a>
@@ -1228,37 +1269,22 @@ footer {
     <div class="built-head reveal">
       <div>
         <div class="eyebrow">live · updated during the session</div>
-        <h2><span class="sub-num">§ 02</span>What the room <em>built tonight</em><span class="live">live</span></h2>
+        <h2><span class="sub-num">§ 02</span>The <em>wall of apps</em><span class="live">live</span></h2>
       </div>
-      <a href="https://tally.so/r/Ek82MN" target="_blank" rel="noopener" class="built-submit">submit your build →</a>
+      <a href="submit.html" class="built-submit">submit your build →</a>
     </div>
-
-    <!-- =====================================================
-         BUILT-TONIGHT CARDS
-         To add a card during the session, copy one of the
-         .build-card blocks below, paste it above the closing
-         </div> of .built-grid, and change:
-           - href="..."             the live URL of the app
-           - .build-name            the app name
-           - .build-url             the visible URL
-           - .build-tag (optional)  category label
-         Add class="is-pick" + the <span class="build-pick">
-         tag to mark a community pick.
-         ===================================================== -->
 
     <div class="built-grid">
 
-      <!-- ====== PLACEHOLDER CARD 1 — replace once submitted ====== -->
-      <a href="#" class="build-card placeholder">
+      <a href="submit.html" class="build-card placeholder">
         <div class="build-head">
           <span class="build-tag">waiting for you</span>
         </div>
         <div class="build-name">Your app goes here.</div>
-        <div class="build-url">submit via the link above</div>
+        <div class="build-url">tap to submit</div>
       </a>
 
-      <!-- ====== PLACEHOLDER CARD 2 — replace once submitted ====== -->
-      <a href="#" class="build-card placeholder">
+      <a href="submit.html" class="build-card placeholder">
         <div class="build-head">
           <span class="build-tag">waiting</span>
         </div>
@@ -1266,8 +1292,7 @@ footer {
         <div class="build-url">we'll push it live on stage</div>
       </a>
 
-      <!-- ====== PLACEHOLDER CARD 3 — replace once submitted ====== -->
-      <a href="#" class="build-card placeholder">
+      <a href="submit.html" class="build-card placeholder">
         <div class="build-head">
           <span class="build-tag">waiting</span>
         </div>
@@ -1275,171 +1300,6 @@ footer {
         <div class="build-url">that's the best part</div>
       </a>
 
-      <!--
-        ====== TEMPLATE — copy this block for a real submission ======
-        <a href="https://example-app.netlify.app" target="_blank" rel="noopener" class="build-card">
-          <div class="build-head">
-            <span class="build-tag">tool</span>
-            <span class="build-pick">🔥 Pick</span>
-          </div>
-          <div class="build-name">App name in a short label.</div>
-          <div class="build-url">example-app.netlify.app</div>
-        </a>
-      -->
-
-    </div>
-  </div>
-</section>
-
-<!-- =====================================================
-     COMMUNITIES
-     ===================================================== -->
-<section id="community">
-  <div class="wrap-narrow">
-    <div class="reveal">
-      <div class="eyebrow">singapore · ai communities</div>
-      <h2><span class="sub-num">§ 03</span>Where the <em>builders</em> hang out.</h2>
-      <p class="lede">
-        Tonight is one room. These are the rooms every other night. Join one, show up once, and you'll never look for "people to build with" again.
-      </p>
-    </div>
-
-    <div class="comm-list reveal">
-      <a href="https://singapore.aitinkerers.org" target="_blank" rel="noopener" class="comm">
-        <div class="comm-name">AI Tinkerers Singapore</div>
-        <div class="comm-desc">Monthly builder meetup, live demos, vetted attendees.</div>
-        <div class="comm-url">singapore.aitinkerers.org</div>
-      </a>
-      <a href="https://meetup.com/global-ai-singapore-community" target="_blank" rel="noopener" class="comm">
-        <div class="comm-name">Global AI Singapore <em style="font-style:italic; color:var(--ink-mute); font-weight:400;">(Agentic Nights)</em></div>
-        <div class="comm-desc">Monthly meetup. Beginner-friendly, deep technical talks.</div>
-        <div class="comm-url">meetup.com/global-ai-singapore-community</div>
-      </a>
-      <a href="https://aievents.sg" target="_blank" rel="noopener" class="comm">
-        <div class="comm-name">AI Events SG</div>
-        <div class="comm-desc">The master calendar for every AI event in Singapore.</div>
-        <div class="comm-url">aievents.sg</div>
-      </a>
-      <a href="https://ai.engineer/singapore" target="_blank" rel="noopener" class="comm">
-        <div class="comm-name">AI Engineer Singapore</div>
-        <div class="comm-desc">The annual builder conference for working engineers.</div>
-        <div class="comm-url">ai.engineer/singapore</div>
-      </a>
-      <a href="https://superai.com" target="_blank" rel="noopener" class="comm">
-        <div class="comm-name">SuperAI</div>
-        <div class="comm-desc">Asia's largest AI conference. Marina Bay Sands.</div>
-        <div class="comm-url">superai.com</div>
-      </a>
-      <a href="https://aisingapore.org" target="_blank" rel="noopener" class="comm">
-        <div class="comm-name">AI Singapore</div>
-        <div class="comm-desc">The national AI programme. Apprenticeship schemes, grants, talent.</div>
-        <div class="comm-url">aisingapore.org</div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- =====================================================
-     TOOLS
-     ===================================================== -->
-<section class="tools" id="tools">
-  <div class="wrap-narrow">
-    <div class="reveal">
-      <div class="eyebrow">level up · your toolbelt</div>
-      <h2><span class="sub-num">§ 04</span>The tools <em>worth knowing</em>.</h2>
-      <p class="lede">
-        Lovable will get you live tonight. These are what to try next, depending on where you want to go.
-      </p>
-    </div>
-
-    <table class="tools-table reveal">
-      <thead>
-        <tr>
-          <th>Tool</th>
-          <th>Best for</th>
-          <th style="text-align:right;">Where</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Lovable</td>
-          <td>The most beginner-friendly full-app builder.</td>
-          <td><a href="https://lovable.dev" target="_blank" rel="noopener">lovable.dev</a></td>
-        </tr>
-        <tr>
-          <td>Bolt</td>
-          <td>The best free tier for prompt-to-app.</td>
-          <td><a href="https://bolt.new" target="_blank" rel="noopener">bolt.new</a></td>
-        </tr>
-        <tr>
-          <td>v0 by Vercel</td>
-          <td>Beautiful UI components, one prompt at a time.</td>
-          <td><a href="https://v0.app" target="_blank" rel="noopener">v0.app</a></td>
-        </tr>
-        <tr>
-          <td>Replit</td>
-          <td>A full coding environment in your browser.</td>
-          <td><a href="https://replit.com" target="_blank" rel="noopener">replit.com</a></td>
-        </tr>
-        <tr>
-          <td>Claude Code</td>
-          <td>A terminal AI coding agent. The tool we use on stage.</td>
-          <td><a href="https://claude.com/claude-code" target="_blank" rel="noopener">claude.com/claude-code</a></td>
-        </tr>
-        <tr>
-          <td>Supabase</td>
-          <td>A free database for your app.</td>
-          <td><a href="https://supabase.com" target="_blank" rel="noopener">supabase.com</a></td>
-        </tr>
-        <tr>
-          <td>Netlify</td>
-          <td>Free hosting + auto-deploy from GitHub.</td>
-          <td><a href="https://netlify.com" target="_blank" rel="noopener">netlify.com</a></td>
-        </tr>
-        <tr>
-          <td>GitHub Pages</td>
-          <td>Free permanent hosting, straight from your repo.</td>
-          <td><a href="https://pages.github.com" target="_blank" rel="noopener">pages.github.com</a></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- =====================================================
-     LEARN
-     ===================================================== -->
-<section id="learn">
-  <div class="wrap-narrow">
-    <div class="reveal">
-      <div class="eyebrow">free · learning resources</div>
-      <h2><span class="sub-num">§ 05</span>If you only read <em>four things</em>.</h2>
-      <p class="lede">
-        Everything below is free. The first hour you spend with any of these will quietly change how you talk to every model from now on.
-      </p>
-    </div>
-
-    <div class="learn-grid reveal">
-      <a href="https://docs.claude.com" target="_blank" rel="noopener" class="learn-card">
-        <div class="learn-name">Anthropic Prompting Guide</div>
-        <div class="learn-desc">Straight from the people who make Claude. Crisp, technical, opinionated.</div>
-        <div class="learn-url">docs.claude.com →</div>
-      </a>
-      <a href="https://learnprompting.org" target="_blank" rel="noopener" class="learn-card">
-        <div class="learn-name">Learn Prompting</div>
-        <div class="learn-desc">The most comprehensive free prompting guide on the internet.</div>
-        <div class="learn-url">learnprompting.org →</div>
-      </a>
-      <a href="https://promptingguide.ai" target="_blank" rel="noopener" class="learn-card">
-        <div class="learn-name">Prompt Engineering Guide</div>
-        <div class="learn-desc">The DAIR.AI handbook. Patterns, techniques, papers in one place.</div>
-        <div class="learn-url">promptingguide.ai →</div>
-      </a>
-      <a href="https://deeplearning.ai" target="_blank" rel="noopener" class="learn-card">
-        <div class="learn-name">DeepLearning.AI — 1hr Course</div>
-        <div class="learn-desc">Andrew Ng + OpenAI. The single best hour you can spend on this.</div>
-        <div class="learn-url">deeplearning.ai →</div>
-      </a>
     </div>
   </div>
 </section>
@@ -1462,19 +1322,7 @@ footer {
         <span class="connect-desc">Where the next session, the build links, and the questions live.</span>
         <span class="connect-url">chat.whatsapp.com →</span>
       </a>
-      <a href="https://linkedin.com/in/qanital" target="_blank" rel="noopener" class="connect-card">
-        <span class="connect-tag">linkedin</span>
-        <span class="connect-name">Connect with the host</span>
-        <span class="connect-url">linkedin.com/in/qanital →</span>
-      </a>
-      <a href="https://qals.substack.com" target="_blank" rel="noopener" class="connect-card">
-        <span class="connect-tag">substack</span>
-        <span class="connect-name">The longer-form essays</span>
-        <span class="connect-url">qals.substack.com →</span>
-      </a>
     </div>
-
-    <p class="connect-note">// Future sessions in the Jom Jumpa #AI series will be announced here first.</p>
   </div>
 </section>
 
@@ -1506,14 +1354,15 @@ footer {
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
   // ============================================================
-  // BUILT-TONIGHT — pull approved submissions from Supabase.
-  // Tally form posts to the tally-webhook Edge Function, which
-  // inserts a row into `builds`. Rows default approved=true.
+  // WALL OF APPS — fetch approved builds from Supabase and render.
+  // Submissions happen on the dedicated /submit.html page (linked
+  // from the section header and placeholder cards).
   // ============================================================
   import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
   const SUPABASE_URL = 'https://coixbvfepucdnzoxbklb.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_dMW7WJRC4Ugz5SfzzSBUIw_2zkLimSl';
+  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
   const escapeHtml = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -1531,6 +1380,8 @@ footer {
         ${b.pick ? `<span class="build-pick">🔥 Pick</span>` : ''}
       </div>
       <div class="build-name">${escapeHtml(b.name)}</div>
+      ${b.description ? `<div class="build-desc">${escapeHtml(b.description)}</div>` : ''}
+      ${b.submitter ? `<div class="build-credit">${escapeHtml(b.submitter)}</div>` : ''}
       <div class="build-url">${escapeHtml(displayUrl(b.url))}</div>
     </a>
   `;
@@ -1539,10 +1390,9 @@ footer {
     const grid = document.querySelector('.built-grid');
     if (!grid) return;
     try {
-      const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
       const { data, error } = await supabase
         .from('builds')
-        .select('name,url,tag,submitter,pick,created_at')
+        .select('name,url,description,submitter,tag,pick,created_at')
         .eq('approved', true)
         .order('pick', { ascending: false })
         .order('created_at', { ascending: false })

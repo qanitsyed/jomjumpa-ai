@@ -3,3 +3,8 @@ node_modules/
 *:Zone.Identifier
 supabase/.temp/
 supabase/.branches/
+
+# Attendee/registrant data — never commit
+Registrants*.csv
+*-registrants.csv
+*-attendees.csv
