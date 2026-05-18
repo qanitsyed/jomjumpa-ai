@@ -8,3 +8,7 @@ supabase/.branches/
 Registrants*.csv
 *-registrants.csv
 *-attendees.csv
+
+# Event marketing assets kept locally, not on the site
+poster.jpg
+poster.png
