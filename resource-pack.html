@@ -543,6 +543,189 @@ footer {
   line-height: 1.45;
 }
 @media (max-width: 640px) { .foot-side { text-align: left; } }
+
+/* PROMPTING — the craft */
+.prompting {
+  background:
+    radial-gradient(700px 320px at 100% 0%, rgba(217, 78, 58, 0.07), transparent 60%),
+    radial-gradient(600px 320px at 0% 100%, rgba(200, 155, 74, 0.10), transparent 60%),
+    var(--paper);
+  border-bottom: 1px solid var(--rule);
+}
+.trap {
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 14px;
+  padding: 28px 30px;
+  margin: 6px 0 36px;
+  position: relative;
+  overflow: hidden;
+}
+.trap::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--coral), var(--gold));
+}
+.trap-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.trap-quote {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(20px, 2.6vw, 26px);
+  line-height: 1.32;
+  font-weight: 400;
+  font-style: italic;
+  margin-bottom: 14px;
+}
+.trap-quote .accent { color: var(--gold); font-style: normal; font-weight: 500; }
+.trap-body {
+  font-size: 14.5px;
+  color: rgba(250, 248, 244, 0.78);
+  line-height: 1.6;
+  max-width: 640px;
+}
+.trap-body strong { color: var(--paper); font-weight: 600; }
+
+.subhead {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(22px, 2.8vw, 26px);
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  line-height: 1.15;
+  margin: 8px 0 6px;
+}
+.subhead em { font-style: italic; color: var(--coral); font-weight: 500; }
+.subhead-lede {
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  max-width: 640px;
+  margin-bottom: 22px;
+}
+
+.apps {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 44px;
+}
+@media (max-width: 760px) { .apps { grid-template-columns: 1fr; } }
+.app {
+  background: white;
+  border: 1.5px solid var(--rule);
+  border-radius: 12px;
+  padding: 22px 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+.app:hover {
+  border-color: var(--gold);
+  box-shadow: 0 10px 22px -16px rgba(20, 22, 31, 0.22);
+  transform: translateY(-2px);
+}
+.app-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 2px;
+}
+.app-kind {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  font-weight: 700;
+}
+.app-size {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.app-size.s-small { background: var(--beg-bg); color: var(--beg); }
+.app-size.s-med   { background: var(--int-bg); color: var(--int); }
+.app-size.s-large { background: var(--adv-bg); color: var(--adv); }
+.app-title {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+}
+.app-examples {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  color: var(--ink-mute);
+  letter-spacing: 0.2px;
+  line-height: 1.5;
+}
+.app-pattern {
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--rule);
+}
+.app-pattern strong { color: var(--ink); font-weight: 600; }
+
+.hacks {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 22px;
+  counter-reset: hack;
+}
+@media (max-width: 720px) { .hacks { grid-template-columns: 1fr; } }
+.hack {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  padding: 16px 4px 16px 0;
+  border-top: 1px solid var(--rule);
+  counter-increment: hack;
+}
+.hack::before {
+  content: counter(hack, decimal-leading-zero);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold-deep);
+  letter-spacing: 1px;
+  padding-top: 3px;
+}
+.hack-title {
+  font-family: 'Fraunces', serif;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.2px;
+  line-height: 1.25;
+  margin-bottom: 4px;
+}
+.hack-body { font-size: 14px; color: var(--ink-soft); line-height: 1.55; }
+.hack-body code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.92em;
+  background: var(--paper-warm);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--ink);
+}
 </style>
 </head>
 <body>
@@ -567,12 +750,160 @@ footer {
     <h1>Everything <em>worth knowing</em> after tonight.</h1>
     <p class="lede">The Singapore AI scene, the four guides that change how you talk to models, and a working catalogue of tools &mdash; from what we used on stage tonight to the wider landscape mapped by AI Engineer Singapore 2026.</p>
     <div class="section-jump">
+      <a href="#prompting">Prompting</a>
       <a href="#sg-scene">SG AI scene</a>
       <a href="#learn">Learn the craft</a>
       <a href="#tooling">Tooling</a>
     </div>
   </div>
 </header>
+
+<!-- PROMPTING — the craft -->
+<section id="prompting" class="prompting">
+  <div class="wrap-narrow">
+    <div class="section-tag">// the craft · how to prompt</div>
+    <h2>Prompt like you <em>mean it</em>.</h2>
+    <p class="section-lede">The Golden Rule is one line for one kind of app. Past that, prompting is a craft — and most of the craft is knowing what <em>not</em> to ask for in a single shot. Here's the short version.</p>
+
+    <div class="trap">
+      <div class="trap-label">The single biggest mistake</div>
+      <div class="trap-quote">
+        <span class="accent">Don't one-shot a complex app.</span> Ask for the smallest thing that works, then add one feature at a time.
+      </div>
+      <p class="trap-body">
+        When you describe a five-feature app in one prompt, the model hallucinates features, regenerates everything on each iteration (losing your edits), and writes 500 lines you can't debug. <strong>The smaller the first prompt, the faster everything after it goes.</strong> If you can't describe the app in one paragraph, your prompt is too big.
+      </p>
+    </div>
+
+    <h3 class="subhead">By the <em>type</em> of app you're building.</h3>
+    <p class="subhead-lede">Five shapes cover almost everything you'll try tonight — and almost everything the room said they wished they had. The pattern changes with the shape.</p>
+
+    <div class="apps">
+
+      <article class="app">
+        <div class="app-meta">
+          <span class="app-kind">Calculators &amp; lookups</span>
+          <span class="app-size s-small">small · one-shot OK</span>
+        </div>
+        <div class="app-title">Zakat calc. Tax estimator. Shariah-fund check.</div>
+        <div class="app-examples">// expense calc · shariah compliance check · CV reformatter · stock screener</div>
+        <p class="app-pattern">
+          <strong>One prompt is fine.</strong> Specify the inputs, the outputs, and one worked example. End with the Golden Rule. These apps live or die on edge cases — list the weird ones in the prompt before you write a line of code.
+        </p>
+      </article>
+
+      <article class="app">
+        <div class="app-meta">
+          <span class="app-kind">Trackers &amp; dashboards</span>
+          <span class="app-size s-med">medium · two prompts</span>
+        </div>
+        <div class="app-title">Monthly report. Net worth tracker. Team performance.</div>
+        <div class="app-examples">// productivity tracker · billable-hours autolog · project dashboard · expense tracker</div>
+        <p class="app-pattern">
+          <strong>Data first, then the UI.</strong> Prompt one: "Here's the shape of one row, here's 5 dummy rows — give me the data structure and localStorage code." Prompt two: "Now build the dashboard on top of that data." Skipping the first prompt is why your dashboard keeps re-rendering wrong.
+        </p>
+      </article>
+
+      <article class="app">
+        <div class="app-meta">
+          <span class="app-kind">Intake &amp; submission tools</span>
+          <span class="app-size s-med">medium · stage the storage</span>
+        </div>
+        <div class="app-title">Sign-up forms. Feedback collectors. Application intake.</div>
+        <div class="app-examples">// event RSVP · client onboarding form · survey · waitlist</div>
+        <p class="app-pattern">
+          <strong>Don't try to wire a real database in one prompt.</strong> Start with localStorage (works offline, shows the flow). Upgrade to a Google Sheet via a webhook for v2. Reach for Supabase only when you actually need multi-user reads — that's Track 4 territory, not the first hour.
+        </p>
+      </article>
+
+      <article class="app">
+        <div class="app-meta">
+          <span class="app-kind">Generators &amp; summarizers</span>
+          <span class="app-size s-med">medium · use a builder</span>
+        </div>
+        <div class="app-title">Blog generator. Market-insights digest. LinkedIn drafter.</div>
+        <div class="app-examples">// auto blog publisher · contract-clause flagger · meeting summarizer · CV rewriter</div>
+        <p class="app-pattern">
+          <strong>These need an LLM API call from inside your code</strong> — and a single HTML file can't safely hold the API key. Use Lovable or Bolt; they handle the key and the env for you. Prompt: "Build me a [thing]. When the user clicks Generate, call Claude with this system prompt: ..."
+        </p>
+      </article>
+
+      <article class="app">
+        <div class="app-meta">
+          <span class="app-kind">Email / calendar / CRM agents</span>
+          <span class="app-size s-large">large · out of scope</span>
+        </div>
+        <div class="app-title">Inbox manager. Calendar agent. Day-to-day startup AI.</div>
+        <div class="app-examples">// agentic admin · auto-reply triage · CRM updater · meeting prep agent</div>
+        <p class="app-pattern">
+          <strong>Don't try to build this in one hour.</strong> Real agents need auth, real APIs, and real money on a real timer. Build the <em>dashboard</em> that shows what you'd automate, then wire the automation in Make.com or n8n once the dashboard works. Half the value is just seeing the workflow on a screen.
+        </p>
+      </article>
+
+      <article class="app">
+        <div class="app-meta">
+          <span class="app-kind">When in doubt</span>
+          <span class="app-size s-small">smaller · always</span>
+        </div>
+        <div class="app-title">Pick the smallest shape that proves the idea.</div>
+        <div class="app-examples">// ship one feature · iterate · then add the next</div>
+        <p class="app-pattern">
+          <strong>If your idea spans two of the shapes above, pick one and ship it tonight.</strong> A working tracker beats a half-built agent. Half the things the room asked for are agents — but the calculator inside the agent is what you can actually finish before 9pm.
+        </p>
+      </article>
+
+    </div>
+
+    <h3 class="subhead">Six prompt hacks <em>that just work</em>.</h3>
+    <p class="subhead-lede">Universal patterns. Use them across any tool — Claude, ChatGPT, Lovable, Bolt, Cursor. They don't replace thinking; they prevent the most common ways prompting wastes your time.</p>
+
+    <div class="hacks">
+
+      <div class="hack">
+        <div>
+          <div class="hack-title">Anchor with one worked example.</div>
+          <div class="hack-body">Paste one sample input and the exact output you want. The model copies the shape. Five sentences of description loses to one concrete example every time.</div>
+        </div>
+      </div>
+
+      <div class="hack">
+        <div>
+          <div class="hack-title">Specify the stack — every time.</div>
+          <div class="hack-body">End every build prompt with the Golden Rule: <code>single self-contained HTML file, no external libraries, clean modern design, mobile-friendly</code>. Without it the model defaults to React + a build step you don't have.</div>
+        </div>
+      </div>
+
+      <div class="hack">
+        <div>
+          <div class="hack-title">Constrain what <em>not</em> to do.</div>
+          <div class="hack-body">"Don't ask me clarifying questions — make sensible defaults." "Don't add a backend." "Don't use frameworks." Negative constraints save more time than positive ones because they cut off the dead branches first.</div>
+        </div>
+      </div>
+
+      <div class="hack">
+        <div>
+          <div class="hack-title">Ask for tradeoffs <em>before</em> the code.</div>
+          <div class="hack-body">"Before writing code, give me 3 ways to structure this and the tradeoff for each." You'll catch the wrong direction in 30 seconds instead of in 500 lines. Especially for anything involving storage, auth, or layout.</div>
+        </div>
+      </div>
+
+      <div class="hack">
+        <div>
+          <div class="hack-title">Paste errors verbatim.</div>
+          <div class="hack-body">Copy the full error message — stack trace, line number, the lot. Don't paraphrase, don't summarize. The model debugs from the literal string. "It's broken" gets you guesses; the raw error gets you the fix.</div>
+        </div>
+      </div>
+
+      <div class="hack">
+        <div>
+          <div class="hack-title">Re-prompt. Don't keep chatting.</div>
+          <div class="hack-body">Every 6–8 messages, start a fresh chat. Paste your current working code, then your next ask. Long threads drift — the model starts contradicting earlier decisions and "fixing" things you didn't ask it to touch.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <!-- SG AI SCENE -->
 <section id="sg-scene">

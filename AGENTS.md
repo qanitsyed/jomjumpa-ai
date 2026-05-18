@@ -82,9 +82,12 @@ track-2-dev-mode.html            GitHub + Netlify auto-deploy. Real repo,
 track-3-spec-it-out.html         Writing AGENTS.md for your repo. Five-section
                                  structure, hands-on procedure via GitHub
                                  web UI. The track this very file demonstrates.
-track-4-bonus-round.html         Three optional paths: A) Codespaces +
-                                 Copilot (the AGENTS.md payoff moment),
-                                 B) Supabase database, C) Claude Code CLI.
+track-4-agent-mode.html          Three paths into a serious AI dev setup:
+                                 A) Codespaces + Copilot (the AGENTS.md
+                                 payoff moment), B) Supabase database,
+                                 C) Claude Code CLI + Superpowers.
+                                 Renamed from "Bonus Round" — this is a
+                                 real destination, not extras.
 resource-pack.html               SG AI scene (events + communities), four
                                  prompting-guide picks, and the tooling
                                  catalogue (8 workshop tools + 13 AI Engineer
