@@ -407,68 +407,73 @@ h1.hero-title .ai {
 @keyframes blink { 50% { opacity: 0; } }
 
 /* ============================================================
-   GOLDEN RULE — unmissable
+   PROMPT SIMPLIFIER — the canonical block users paste
    ============================================================ */
-.golden {
+.prompt-section {
+  background: linear-gradient(180deg, var(--paper) 0%, var(--paper-warm) 100%);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.prompt-lede {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: clamp(17px, 2vw, 19px);
+  color: var(--ink-soft);
+  line-height: 1.55;
+  max-width: 600px;
+  margin-bottom: 28px;
+}
+.prompt-block {
   background: var(--ink);
   color: var(--paper);
+  border-left: 4px solid var(--gold);
+  border-radius: 0 14px 14px 0;
+  padding: 26px 28px 24px;
   position: relative;
-  overflow: hidden;
+  box-shadow: 0 18px 36px -28px rgba(20, 22, 31, 0.4);
+  max-width: 780px;
 }
-.golden::before {
-  content: "";
+.prompt-text {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: rgba(250, 248, 244, 0.95);
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+  padding-right: 86px;
+}
+.prompt-copy {
   position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--coral), var(--gold), var(--coral));
-}
-.golden-inner {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 36px;
-  align-items: center;
-}
-@media (max-width: 760px) {
-  .golden-inner { grid-template-columns: 1fr; gap: 18px; }
-}
-.golden-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: var(--gold);
+  top: 16px;
+  right: 16px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.5px;
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  border-radius: 999px;
+  padding: 7px 14px;
+  cursor: pointer;
   font-weight: 700;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  white-space: nowrap;
-  padding: 6px 0;
-  border-right: 1px solid var(--gold);
-  padding-right: 18px;
+  transition: background 0.18s ease, transform 0.15s ease;
 }
-@media (max-width: 760px) {
-  .golden-label {
-    writing-mode: horizontal-tb;
-    transform: none;
-    border-right: none;
-    border-bottom: 1px solid var(--gold);
-    padding: 0 0 12px;
-  }
-}
-.golden-quote {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(20px, 2.8vw, 28px);
-  line-height: 1.35;
-  font-weight: 400;
-  font-style: italic;
-  color: var(--paper);
-}
-.golden-quote .accent { color: var(--gold); font-style: normal; font-weight: 500; }
-.golden-attribution {
+.prompt-copy:hover { background: #d8a857; transform: translateY(-1px); }
+.prompt-copy:active { transform: translateY(0); }
+.prompt-copy.is-copied { background: #56d364; color: var(--ink); }
+.prompt-foot {
   margin-top: 18px;
-  font-size: 13px;
-  color: rgba(250, 248, 244, 0.6);
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.3px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  color: var(--ink-mute);
+  letter-spacing: 0.2px;
+  max-width: 780px;
+}
+@media (max-width: 560px) {
+  .prompt-block { padding: 56px 18px 20px; border-radius: 0 12px 12px 0; }
+  .prompt-text { font-size: 13px; padding-right: 0; }
+  .prompt-copy { top: 14px; right: 14px; padding: 6px 13px; font-size: 11px; }
 }
 
 /* ============================================================
@@ -1136,7 +1141,7 @@ footer {
       </p>
       <div class="hero-ctas">
         <a href="#tracks" class="btn btn-primary">Pick a track <span class="arrow">→</span></a>
-        <a href="#rule" class="btn btn-ghost">The Golden Rule</a>
+        <a href="#prompt" class="btn btn-ghost">The Prompt Simplifier</a>
       </div>
     </div>
 
@@ -1160,17 +1165,20 @@ footer {
 </header>
 
 <!-- =====================================================
-     GOLDEN RULE
+     THE PROMPT SIMPLIFIER
      ===================================================== -->
-<section class="golden" id="rule">
-  <div class="wrap golden-inner reveal">
-    <div class="golden-label">The Golden Rule</div>
-    <div>
-      <blockquote class="golden-quote">
-        Always end your prompt with: <span class="accent">"Build this as a single self-contained HTML file with no external libraries. Clean, modern design. Mobile-friendly."</span>
-      </blockquote>
-      <p class="golden-attribution">// The single most important instruction in this workshop.</p>
+<section class="prompt-section" id="prompt">
+  <div class="wrap reveal">
+    <div class="eyebrow">the prompt simplifier</div>
+    <h2>One block. Paste it <em>below your idea</em>.</h2>
+    <p class="prompt-lede">Write your idea. Paste this block underneath. Send. The AI will reality-check your idea and build a version that actually runs.</p>
+    <div class="prompt-block">
+      <button type="button" class="prompt-copy" data-copy-prompt>Copy</button>
+      <pre class="prompt-text" data-prompt-text>Before you build: if my idea needs a server, login, or live access to email, files, or external data, tell me honestly and offer the closest version that runs entirely in one browser tab. Then ask me to confirm before you build.
+
+Build the confirmed version as a single self-contained HTML file. No external libraries, no imports. Clean, modern, mobile-friendly design.</pre>
     </div>
+    <p class="prompt-foot">// Applies to Tracks 1&ndash;3. By Track 4 you'll be writing your own specs.</p>
   </div>
 </section>
 
@@ -1199,7 +1207,7 @@ footer {
           </div>
         </div>
         <h3>Idea to URL in <em>one prompt</em>.</h3>
-        <p class="track-desc">Open Claude or ChatGPT. Describe your idea, end with the golden rule. Download the HTML. Drop it on Netlify. You're live.</p>
+        <p class="track-desc">Open Claude or ChatGPT. Describe your idea, paste the Prompt Simplifier. Download the HTML. Drop it on Netlify. You're live.</p>
         <div class="track-outcome">
           <span class="label">You'll have</span>
           <span class="val">A live web app at a URL anyone can visit.</span>
@@ -1352,6 +1360,44 @@ footer {
     }
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ============================================================
+  // PROMPT SIMPLIFIER — copy-to-clipboard with feedback.
+  // Reads the text from the visible [data-prompt-text] element so
+  // there's a single source of truth on the page.
+  // ============================================================
+  (() => {
+    const source = document.querySelector('[data-prompt-text]');
+    if (!source) return;
+    const text = source.textContent;
+    document.querySelectorAll('[data-copy-prompt]').forEach((btn) => {
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.setAttribute('readonly', '');
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); } catch {}
+          document.body.removeChild(ta);
+        }
+        const orig = btn.dataset.label || btn.textContent;
+        btn.dataset.label = orig;
+        btn.textContent = 'Copied!';
+        btn.classList.add('is-copied');
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.classList.remove('is-copied');
+        }, 1800);
+      });
+    });
+  })();
 
   // ============================================================
   // WALL OF APPS — fetch approved builds from Supabase and render.

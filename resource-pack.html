@@ -684,6 +684,13 @@ footer {
   border-top: 1px dashed var(--rule);
 }
 .app-pattern strong { color: var(--ink); font-weight: 600; }
+.app-pattern a {
+  color: var(--coral-deep);
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+  text-underline-offset: 2px;
+}
+.app-pattern a:hover { text-decoration-color: var(--coral); }
 
 .hacks {
   display: grid;
@@ -726,6 +733,52 @@ footer {
   border-radius: 4px;
   color: var(--ink);
 }
+
+/* PROMPT SIMPLIFIER BLOCK — copyable canonical block */
+.prompt-block {
+  background: var(--ink);
+  color: var(--paper);
+  border-left: 4px solid var(--gold);
+  border-radius: 0 14px 14px 0;
+  padding: 26px 28px 24px;
+  position: relative;
+  box-shadow: 0 18px 36px -28px rgba(20, 22, 31, 0.4);
+  max-width: 780px;
+}
+.prompt-text {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: rgba(250, 248, 244, 0.95);
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+  padding-right: 86px;
+}
+.prompt-copy {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.5px;
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  border-radius: 999px;
+  padding: 7px 14px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background 0.18s ease, transform 0.15s ease;
+}
+.prompt-copy:hover { background: #d8a857; transform: translateY(-1px); }
+.prompt-copy:active { transform: translateY(0); }
+.prompt-copy.is-copied { background: #56d364; color: var(--ink); }
+@media (max-width: 560px) {
+  .prompt-block { padding: 56px 18px 20px; border-radius: 0 12px 12px 0; }
+  .prompt-text { font-size: 13px; padding-right: 0; }
+  .prompt-copy { top: 14px; right: 14px; padding: 6px 13px; font-size: 11px; }
+}
 </style>
 </head>
 <body>
@@ -763,7 +816,14 @@ footer {
   <div class="wrap-narrow">
     <div class="section-tag">// the craft · how to prompt</div>
     <h2>Prompt like you <em>mean it</em>.</h2>
-    <p class="section-lede">The Golden Rule is one line for one kind of app. Past that, prompting is a craft — and most of the craft is knowing what <em>not</em> to ask for in a single shot. Here's the short version.</p>
+    <p class="section-lede">The Prompt Simplifier handles the basics &mdash; reality-check, then a single self-contained file. Past that, prompting is a craft, and most of the craft is knowing what <em>not</em> to ask for in a single shot. Here's the short version.</p>
+
+    <div class="prompt-block" style="margin-bottom: 30px;">
+      <button type="button" class="prompt-copy" data-copy-prompt>Copy</button>
+      <pre class="prompt-text" data-prompt-text>Before you build: if my idea needs a server, login, or live access to email, files, or external data, tell me honestly and offer the closest version that runs entirely in one browser tab. Then ask me to confirm before you build.
+
+Build the confirmed version as a single self-contained HTML file. No external libraries, no imports. Clean, modern, mobile-friendly design.</pre>
+    </div>
 
     <div class="trap">
       <div class="trap-label">The single biggest mistake</div>
@@ -788,7 +848,7 @@ footer {
         <div class="app-title">Zakat calc. Tax estimator. Shariah-fund check.</div>
         <div class="app-examples">// expense calc · shariah compliance check · CV reformatter · stock screener</div>
         <p class="app-pattern">
-          <strong>One prompt is fine.</strong> Specify the inputs, the outputs, and one worked example. End with the Golden Rule. These apps live or die on edge cases — list the weird ones in the prompt before you write a line of code.
+          <strong>One prompt is fine.</strong> Specify the inputs, the outputs, and one worked example. End with the Prompt Simplifier. These apps live or die on edge cases &mdash; list the weird ones in the prompt before you write a line of code.
         </p>
       </article>
 
@@ -838,6 +898,9 @@ footer {
         <p class="app-pattern">
           <strong>Don't try to build this in one hour.</strong> Real agents need auth, real APIs, and real money on a real timer. Build the <em>dashboard</em> that shows what you'd automate, then wire the automation in Make.com or n8n once the dashboard works. Half the value is just seeing the workflow on a screen.
         </p>
+        <p class="app-pattern" style="margin-top: 10px;">
+          <strong>Want it without building?</strong> Off-the-shelf agentic systems already handle the auth and the runtime &mdash; you describe the task, they do it. Try <a href="https://zo.computer" target="_blank" rel="noopener">Zo Computer</a> (a personal AI computer that runs your day) or <a href="https://simular.ai" target="_blank" rel="noopener">Simular</a> (a computer-use agent that clicks and types inside real apps). Both also appear in the tooling catalogue below.
+        </p>
       </article>
 
       <article class="app">
@@ -868,8 +931,8 @@ footer {
 
       <div class="hack">
         <div>
-          <div class="hack-title">Specify the stack — every time.</div>
-          <div class="hack-body">End every build prompt with the Golden Rule: <code>single self-contained HTML file, no external libraries, clean modern design, mobile-friendly</code>. Without it the model defaults to React + a build step you don't have.</div>
+          <div class="hack-title">Specify the stack &mdash; every time.</div>
+          <div class="hack-body">Paste the Prompt Simplifier (above) after every build prompt. Without it the model defaults to React + a build step you don't have, or quietly assumes a backend you can't provide.</div>
         </div>
       </div>
 
@@ -1320,6 +1383,42 @@ const categories = [
   });
   searchInput.addEventListener('input', applyFilter);
 })();
+</script>
+
+<script>
+  // Prompt Simplifier — copy-to-clipboard with feedback.
+  (() => {
+    const source = document.querySelector('[data-prompt-text]');
+    if (!source) return;
+    const text = source.textContent;
+    document.querySelectorAll('[data-copy-prompt]').forEach((btn) => {
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.setAttribute('readonly', '');
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); } catch {}
+          document.body.removeChild(ta);
+        }
+        const orig = btn.dataset.label || btn.textContent;
+        btn.dataset.label = orig;
+        btn.textContent = 'Copied!';
+        btn.classList.add('is-copied');
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.classList.remove('is-copied');
+        }, 1800);
+      });
+    });
+  })();
 </script>
 
 </body>

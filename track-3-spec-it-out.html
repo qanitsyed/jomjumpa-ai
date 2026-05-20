@@ -47,27 +47,61 @@ body {
 }
 a { color: inherit; }
 
-/* GOLDEN RULE STICKY */
-.golden-rule {
+/* PROMPT SIMPLIFIER STICKY */
+.prompt-bar {
   background: var(--ink);
   color: var(--paper);
-  padding: 14px 22px;
+  padding: 12px 22px 14px;
   position: sticky;
   top: 0;
   z-index: 100;
   border-bottom: 3px solid var(--gold);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
 }
-.gr-label {
+.ps-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.ps-label {
   font-family: 'JetBrains Mono', monospace;
   font-size: 10.5px;
-  letter-spacing: 1.8px;
+  letter-spacing: 1.6px;
   color: var(--gold);
   font-weight: 700;
-  margin-bottom: 4px;
+  text-transform: uppercase;
 }
-.gr-text { font-size: 13.5px; line-height: 1.4; }
-.gr-text strong { color: var(--gold); font-weight: 600; }
+.ps-copy {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.5px;
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  border-radius: 999px;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: background 0.15s ease;
+}
+.ps-copy:hover { background: #d8a857; }
+.ps-copy.is-copied { background: #56d364; color: var(--ink); }
+.ps-text {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: rgba(250, 248, 244, 0.92);
+  white-space: pre-wrap;
+  margin: 0;
+}
+@media (min-width: 720px) { .ps-text { font-size: 12px; } }
+@media (max-width: 380px) {
+  .ps-text { font-size: 10.5px; }
+  .ps-label { font-size: 10px; letter-spacing: 1.3px; }
+}
 
 .container {
   max-width: 720px;
@@ -449,9 +483,14 @@ footer {
 </head>
 <body>
 
-<div class="golden-rule">
-  <div class="gr-label">⭐ THE GOLDEN RULE</div>
-  <div class="gr-text">Always end your prompt with: <strong>"Build this as a single self-contained HTML file with no external libraries. Clean, modern design. Mobile-friendly."</strong></div>
+<div class="prompt-bar">
+  <div class="ps-head">
+    <span class="ps-label">⭐ The Prompt Simplifier · paste below your idea</span>
+    <button type="button" class="ps-copy" data-copy-prompt>Copy</button>
+  </div>
+  <pre class="ps-text" data-prompt-text>Before you build: if my idea needs a server, login, or live access to email, files, or external data, tell me honestly and offer the closest version that runs entirely in one browser tab. Then ask me to confirm before you build.
+
+Build the confirmed version as a single self-contained HTML file. No external libraries, no imports. Clean, modern, mobile-friendly design.</pre>
 </div>
 
 <div class="container">
@@ -460,6 +499,7 @@ footer {
   <span class="track-label">TRACK 03 · SPEC IT OUT</span>
   <h1>Brief the <em>next agent</em>.</h1>
   <p class="subtitle">One markdown file at the root of your repo. Every AI tool you bring in tomorrow already knows what it's looking at &mdash; without you re-explaining anything.</p>
+  <p class="subtitle" style="margin-top: 10px; font-style: italic;">The Prompt Simplifier is the prompt's spec. <code>AGENTS.md</code> is the repo's spec. Both do the same job at different scales.</p>
 </header>
 
 <!-- WHY -->
@@ -728,6 +768,42 @@ Pure static HTML, one file per page. No build step. Hosted on Netlify.
     </div>
   </div>
 </footer>
+
+<script>
+  // Prompt Simplifier — copy-to-clipboard with feedback.
+  (() => {
+    const source = document.querySelector('[data-prompt-text]');
+    if (!source) return;
+    const text = source.textContent;
+    document.querySelectorAll('[data-copy-prompt]').forEach((btn) => {
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.setAttribute('readonly', '');
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); } catch {}
+          document.body.removeChild(ta);
+        }
+        const orig = btn.dataset.label || btn.textContent;
+        btn.dataset.label = orig;
+        btn.textContent = 'Copied!';
+        btn.classList.add('is-copied');
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.classList.remove('is-copied');
+        }, 1800);
+      });
+    });
+  })();
+</script>
 
 </body>
 </html>

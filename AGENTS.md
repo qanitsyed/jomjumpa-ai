@@ -70,7 +70,7 @@ personal access token in `SUPABASE_ACCESS_TOKEN` or `npx supabase login --token`
 ## File map
 
 ```
-index.html                       Landing page. Hero, golden rule, track
+index.html                       Landing page. Hero, prompt simplifier, track
                                  cards, Wall of Apps feed (Supabase fetch),
                                  communities, tools, learn resources, connect.
 track-1-get-it-live.html         Beginner flow (idea → URL via Lovable or
