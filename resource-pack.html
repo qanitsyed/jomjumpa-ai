@@ -97,6 +97,11 @@ a { color: inherit; }
 }
 .nav-links a { text-decoration: none; color: var(--ink-soft); transition: color 0.15s ease; }
 .nav-links a:hover, .nav-links a.is-active { color: var(--coral); }
+.nav-links .nav-aside {
+  border-left: 1px solid var(--rule);
+  padding-left: 22px;
+  margin-left: 4px;
+}
 .nav-cta {
   font-family: 'JetBrains Mono', monospace;
   font-size: 12px;
@@ -791,6 +796,7 @@ footer {
       <a href="index.html#tracks">tracks</a>
       <a href="index.html#built">wall of apps</a>
       <a href="resource-pack.html" class="is-active">resource pack</a>
+      <a href="slides.html" target="_blank" rel="noopener" class="nav-aside">slides</a>
     </div>
     <a href="index.html#connect" class="nav-cta">join_</a>
   </div>

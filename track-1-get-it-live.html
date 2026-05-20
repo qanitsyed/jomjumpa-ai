@@ -426,6 +426,48 @@ footer {
   line-height: 1.6;
 }
 .foot-line strong { color: var(--coral); }
+.share-cta {
+  background: white;
+  border: 1.5px solid var(--green);
+  border-radius: 12px;
+  padding: 20px 22px;
+  margin: 24px auto 28px;
+  max-width: 560px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  text-align: left;
+}
+.share-msg {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--ink);
+  margin: 0;
+  flex: 1 1 220px;
+  line-height: 1.35;
+}
+.share-msg em { font-style: italic; color: var(--green-deep); }
+.share-btn {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  background: var(--green);
+  color: white;
+  border-radius: 999px;
+  padding: 11px 18px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  box-shadow: 0 4px 0 var(--green-deep);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.share-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--green-deep); }
+.share-btn:active { transform: translateY(0); box-shadow: 0 2px 0 var(--green-deep); }
 .foot-links {
   display: flex;
   justify-content: center;
@@ -870,7 +912,11 @@ Build the confirmed version as a single self-contained HTML file. No external li
 
 <footer>
   <div class="container">
-    <p class="foot-line">Still stuck? <strong>Find Q or Wafiy in the room — that's what we're here for.</strong></p>
+    <div class="share-cta">
+      <p class="share-msg">Built something <em>cool</em>? Share it on the Wall of Apps.</p>
+      <a href="submit.html" class="share-btn">Submit your build &rarr;</a>
+    </div>
+    <p class="foot-line">Still stuck? <strong>Find anyone with a star on their name tag.</strong> A few people are roaming to help unblock anyone who's stuck.</p>
     <div class="foot-links">
       <a href="resource-pack.html">Resource Pack</a>
       <a href="#" onclick="scrollTo(0,0); return false;">Back to top</a>

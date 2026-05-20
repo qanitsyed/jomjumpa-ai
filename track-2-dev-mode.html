@@ -381,6 +381,47 @@ footer {
   font-family: 'JetBrains Mono', monospace;
 }
 .foot-line { font-size: 12.5px; color: var(--muted); margin-bottom: 14px; }
+.share-cta {
+  background: white;
+  border: 1.5px solid var(--orange);
+  border-radius: 12px;
+  padding: 20px 22px;
+  margin: 0 auto 24px;
+  max-width: 560px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+}
+.share-msg {
+  font-weight: 500;
+  font-size: 15.5px;
+  color: var(--ink);
+  margin: 0;
+  flex: 1 1 220px;
+  line-height: 1.35;
+}
+.share-msg em { font-style: italic; color: var(--orange-deep); }
+.share-btn {
+  font-weight: 600;
+  font-size: 13.5px;
+  background: var(--orange);
+  color: white;
+  border-radius: 999px;
+  padding: 10px 18px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  box-shadow: 0 4px 0 var(--orange-deep);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.share-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--orange-deep); }
+.share-btn:active { transform: translateY(0); box-shadow: 0 2px 0 var(--orange-deep); }
 .foot-links {
   display: flex;
   justify-content: center;
@@ -686,7 +727,11 @@ Netlify <span class="keyword">→</span> live URL
 
 <footer>
   <div class="container">
-    <p class="foot-line">Done? <strong style="color: var(--orange);">→ track-4-agent-mode</strong> — cloud editor, databases, or Claude Code CLI.</p>
+    <div class="share-cta">
+      <p class="share-msg">Built something <em>cool</em>? Share it on the Wall of Apps.</p>
+      <a href="submit.html" class="share-btn">Submit your build &rarr;</a>
+    </div>
+    <p class="foot-line">Done? <strong style="color: var(--orange);">&rarr; track-4-agent-mode</strong> &mdash; cloud editor, databases, or Claude Code CLI.</p>
     <div class="foot-links">
       <a href="resource-pack.html">resource-pack</a>
       <a href="#" onclick="scrollTo(0,0); return false;">↑ top</a>

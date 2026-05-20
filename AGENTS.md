@@ -93,6 +93,13 @@ resource-pack.html               SG AI scene (events + communities), four
                                  catalogue (8 workshop tools + 13 AI Engineer
                                  SG categories with search + level filter).
                                  Replaces the old Notion link.
+slides.html                      One-line redirect to the Google Slides
+                                 deck. Lives at /slides so the QR target
+                                 and nav link stay on this domain while
+                                 the deck stays editable in Drive.
+                                 Update the Slides URL in this file
+                                 (meta-refresh + JS replace) when the
+                                 deck moves.
 submit.html                      Standalone submission page (QR target).
                                  Same form fields as before; inserts into
                                  `builds` and `submitters` via the

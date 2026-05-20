@@ -367,6 +367,47 @@ footer {
 }
 .foot-line { font-size: 12px; color: var(--muted); margin-bottom: 14px; line-height: 1.6; }
 .foot-line .purple { color: var(--purple); }
+.share-cta {
+  background: white;
+  border: 1.5px solid var(--purple-deep);
+  border-radius: 12px;
+  padding: 20px 22px;
+  margin: 0 auto 24px;
+  max-width: 560px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+}
+.share-msg {
+  font-weight: 500;
+  font-size: 15.5px;
+  color: var(--ink);
+  margin: 0;
+  flex: 1 1 220px;
+  line-height: 1.35;
+}
+.share-msg em { font-style: italic; color: var(--purple-deep); }
+.share-btn {
+  font-weight: 600;
+  font-size: 13.5px;
+  background: var(--purple-deep);
+  color: white;
+  border-radius: 999px;
+  padding: 10px 18px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  box-shadow: 0 4px 0 #5b3766;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.share-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #5b3766; }
+.share-btn:active { transform: translateY(0); box-shadow: 0 2px 0 #5b3766; }
 .foot-links {
   display: flex;
   justify-content: center;
@@ -794,6 +835,10 @@ footer {
 
 <footer>
   <div class="container">
+    <div class="share-cta">
+      <p class="share-msg">Built something <em>cool</em>? Share it on the Wall of Apps.</p>
+      <a href="submit.html" class="share-btn">Submit your build &rarr;</a>
+    </div>
     <p class="foot-line">
       <span class="purple">end of track-4-agent-mode.md</span><br>
       keep building. the rest is a lifetime's worth.

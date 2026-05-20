@@ -12,3 +12,7 @@ Registrants*.csv
 # Event marketing assets kept locally, not on the site
 poster.jpg
 poster.png
+
+# Slide deck source — lives on Google Drive, not in the repo
+*.pptx
+*.key
