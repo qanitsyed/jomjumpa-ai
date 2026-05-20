@@ -205,13 +205,30 @@ h1 em { font-style: italic; color: var(--coral); font-weight: 500; }
   max-width: 640px;
 }
 
-/* SECTION JUMP NAV */
+/* SECTION JUMP NAV — sticky breadcrumb below the global nav */
+.section-jump-bar {
+  position: sticky;
+  top: 49px;
+  z-index: 70;
+  background: rgba(250, 248, 244, 0.94);
+  backdrop-filter: saturate(140%) blur(10px);
+  -webkit-backdrop-filter: saturate(140%) blur(10px);
+  border-bottom: 1px solid var(--rule);
+  padding: 10px 0;
+}
+@media (max-width: 760px) {
+  .section-jump-bar { top: 85px; padding: 8px 0; }
+}
 .section-jump {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin: 28px 0 0;
+  margin: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+.section-jump::-webkit-scrollbar { display: none; }
 .section-jump a {
   font-family: 'JetBrains Mono', monospace;
   font-size: 11.5px;
@@ -223,10 +240,16 @@ h1 em { font-style: italic; color: var(--coral); font-weight: 500; }
   color: var(--ink-soft);
   text-decoration: none;
   transition: all 0.15s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .section-jump a:hover {
   border-color: var(--coral);
   color: var(--coral);
+}
+@media (max-width: 480px) {
+  .section-jump { flex-wrap: nowrap; }
+  .section-jump a { font-size: 11px; padding: 6px 11px; }
 }
 
 /* SECTION */
@@ -292,45 +315,6 @@ h2 em { font-style: italic; color: var(--coral); font-weight: 500; }
 @media (max-width: 760px) {
   .scene { grid-template-columns: 1fr; gap: 6px; padding: 20px 4px; }
   .scene-name { font-size: 19px; }
-}
-
-/* LEARN — cards */
-.learn-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-}
-@media (max-width: 720px) { .learn-grid { grid-template-columns: 1fr; } }
-.learn-card {
-  background: white;
-  border: 1.5px solid var(--rule);
-  border-radius: 12px;
-  padding: 22px 22px 20px;
-  text-decoration: none;
-  color: var(--ink);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
-}
-.learn-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--gold);
-  box-shadow: 0 10px 22px -16px rgba(20, 22, 31, 0.25);
-}
-.learn-name {
-  font-family: 'Fraunces', serif;
-  font-size: 21px;
-  font-weight: 500;
-  letter-spacing: -0.2px;
-}
-.learn-desc { font-size: 14.5px; color: var(--ink-soft); line-height: 1.5; }
-.learn-url {
-  margin-top: 6px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  color: var(--coral);
-  letter-spacing: 0.2px;
 }
 
 /* TOOLING — controls + categories */
@@ -739,6 +723,81 @@ footer {
   color: var(--ink);
 }
 
+/* TAKE IT FURTHER — Mendaki sponsored next step */
+#next-step {
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+}
+.sponsor-card {
+  display: block;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 14px;
+  padding: 28px 28px 24px;
+  text-decoration: none;
+  border-left: 4px solid var(--coral);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  box-shadow: 0 18px 36px -28px rgba(20, 22, 31, 0.4);
+  max-width: 720px;
+}
+.sponsor-card::before {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(217, 78, 58, 0.22), transparent 70%);
+  pointer-events: none;
+}
+.sponsor-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 24px 44px -28px rgba(20, 22, 31, 0.5);
+}
+.sponsor-head { position: relative; }
+.sponsor-tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--coral);
+  font-weight: 700;
+  background: rgba(217, 78, 58, 0.15);
+  padding: 5px 12px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+.sponsor-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(22px, 3vw, 28px);
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  line-height: 1.15;
+  margin-bottom: 10px;
+  color: var(--paper);
+  position: relative;
+}
+.sponsor-desc {
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgba(250, 248, 244, 0.82);
+  max-width: 540px;
+  margin-bottom: 16px;
+  position: relative;
+}
+.sponsor-url {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--gold);
+  letter-spacing: 0.3px;
+  position: relative;
+}
+@media (max-width: 480px) {
+  .sponsor-card { padding: 22px 20px 20px; }
+  .sponsor-card::before { width: 140px; height: 140px; }
+}
+
 /* PROMPT SIMPLIFIER BLOCK — copyable canonical block */
 .prompt-block {
   background: var(--ink);
@@ -807,15 +866,20 @@ footer {
   <div class="wrap page-head-inner">
     <div class="eyebrow">resource pack · 2026</div>
     <h1>Everything <em>worth knowing</em> after tonight.</h1>
-    <p class="lede">The Singapore AI scene, the four guides that change how you talk to models, and a working catalogue of tools &mdash; from what we used on stage tonight to the wider landscape mapped by AI Engineer Singapore 2026.</p>
-    <div class="section-jump">
-      <a href="#prompting">Prompting</a>
-      <a href="#sg-scene">SG AI scene</a>
-      <a href="#learn">Learn the craft</a>
-      <a href="#tooling">Tooling</a>
-    </div>
+    <p class="lede">The Singapore AI scene, a sponsored next step from Mendaki, and a working catalogue of tools &mdash; from what we used on stage tonight to the wider landscape mapped by AI Engineer Singapore 2026.</p>
   </div>
 </header>
+
+<div class="section-jump-bar">
+  <div class="wrap">
+    <nav class="section-jump" aria-label="Resource pack sections">
+      <a href="#prompting">Prompting</a>
+      <a href="#sg-scene">SG AI scene</a>
+      <a href="#next-step">Take it further</a>
+      <a href="#tooling">Tooling</a>
+    </nav>
+  </div>
+</div>
 
 <!-- PROMPTING — the craft -->
 <section id="prompting" class="prompting">
@@ -1016,35 +1080,21 @@ Build the confirmed version as a single self-contained HTML file. No external li
   </div>
 </section>
 
-<!-- LEARN -->
-<section id="learn" style="background: linear-gradient(180deg, var(--paper-warm) 0%, var(--paper) 100%); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);">
+<!-- TAKE IT FURTHER · MENDAKI SPONSORED -->
+<section id="next-step">
   <div class="wrap-narrow">
-    <div class="section-tag">// free · learning resources</div>
-    <h2>If you only read <em>four things</em>.</h2>
-    <p class="section-lede">Everything below is free. The first hour you spend with any of these will quietly change how you talk to every model from now on.</p>
+    <div class="section-tag">// take it further · from mendaki</div>
+    <h2>Want to go <em>further still</em>?</h2>
+    <p class="section-lede">Mendaki &mdash; the workshop's organising partner &mdash; fully sponsors eligible members of Singapore's Malay/Muslim community to earn a recognised Google AI credential. The next step after tonight, if "career" is the word you're thinking.</p>
 
-    <div class="learn-grid">
-      <a href="https://docs.claude.com" target="_blank" rel="noopener" class="learn-card">
-        <div class="learn-name">Anthropic Prompting Guide</div>
-        <div class="learn-desc">Straight from the people who make Claude. Crisp, technical, opinionated.</div>
-        <div class="learn-url">docs.claude.com &rarr;</div>
-      </a>
-      <a href="https://learnprompting.org" target="_blank" rel="noopener" class="learn-card">
-        <div class="learn-name">Learn Prompting</div>
-        <div class="learn-desc">The most comprehensive free prompting guide on the internet.</div>
-        <div class="learn-url">learnprompting.org &rarr;</div>
-      </a>
-      <a href="https://promptingguide.ai" target="_blank" rel="noopener" class="learn-card">
-        <div class="learn-name">Prompt Engineering Guide</div>
-        <div class="learn-desc">The DAIR.AI handbook. Patterns, techniques, papers in one place.</div>
-        <div class="learn-url">promptingguide.ai &rarr;</div>
-      </a>
-      <a href="https://deeplearning.ai" target="_blank" rel="noopener" class="learn-card">
-        <div class="learn-name">DeepLearning.AI &mdash; 1hr Course</div>
-        <div class="learn-desc">Andrew Ng + OpenAI. The single best hour you can spend on this.</div>
-        <div class="learn-url">deeplearning.ai &rarr;</div>
-      </a>
-    </div>
+    <a href="https://www.facebook.com/MENDAKISG/photos/your-career-upgrade-starts-here-earn-a-google-ai-professional-certification-100-/1402153695281044/" target="_blank" rel="noopener" class="sponsor-card">
+      <div class="sponsor-head">
+        <span class="sponsor-tag">⭐ 100% sponsored &middot; Mendaki</span>
+      </div>
+      <div class="sponsor-title">Google AI Professional Certification</div>
+      <div class="sponsor-desc">Earn a recognised Google credential in AI. Designed for working professionals and serious career switchers &mdash; full sponsorship for eligible applicants. Career upgrade starts here.</div>
+      <div class="sponsor-url">facebook.com/MENDAKISG &rarr; full details + how to sign up</div>
+    </a>
   </div>
 </section>
 
